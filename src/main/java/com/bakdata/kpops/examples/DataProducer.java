@@ -1,10 +1,10 @@
-package com.bakdata.kafka;
+package com.bakdata.kpops.examples;
 
-import java.io.BufferedReader;
+import com.bakdata.kafka.KafkaProducerApplication;
+import com.google.common.io.Resources;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 import lombok.Setter;
@@ -13,7 +13,6 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 @Setter
@@ -35,35 +34,19 @@ public class DataProducer extends KafkaProducerApplication {
 
     @Override
     protected void runApplication() {
-        final List<String> textLines = loadTextData(FILE_NAME);
         try (final KafkaProducer<String, String> producer = this.createProducer()) {
-            for (int i = 0; i < textLines.size(); i++) {
+            final URL url = Resources.getResource(FILE_NAME);
+            final List<String> textLines = Resources.readLines(url, StandardCharsets.UTF_8);
 
+            for (int i = 0; i < textLines.size(); i++) {
                 log.info("Producing message:  {}---->to <<{}>>", textLines.get(i), this.getOutputTopic());
                 this.publish(producer, String.valueOf(i + 1), textLines.get(i));
                 log.info("Data produced.");
             }
             producer.flush();
-        }
-    }
-
-    public static List<String> loadTextData(final String fileName) {
-        final ClassLoader classLoader = DataProducer.class.getClassLoader();
-        final List<String> textLines = new ArrayList<>();
-        final InputStream inputStream = classLoader.getResourceAsStream(fileName);
-        try {
-            assert inputStream != null;
-            try (final BufferedReader br
-                    = new BufferedReader(new InputStreamReader(inputStream))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    textLines.add(line);
-                }
-            }
         } catch (final IOException e) {
-            throw new RuntimeException("Error occurred while loading .txt file", e);
+            throw new RuntimeException(e);
         }
-        return textLines;
     }
 
     private void publish(final Producer<? super String, ? super String> producer, final String id, final String line) {
