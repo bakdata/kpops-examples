@@ -39,3 +39,5 @@ gess/
 deploy-demo-pipeline.sh
 
 setup.sh
+
+.gradle
