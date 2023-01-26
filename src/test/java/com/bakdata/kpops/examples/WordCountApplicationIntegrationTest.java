@@ -19,16 +19,16 @@ class WordCountApplicationIntegrationTest {
     final TestTopologyExtension<String, String> testTopology =
         new TestTopologyExtension<>(this.app::createTopology, this.app.getKafkaProperties());
 
-    @AfterEach
-    void tearDown() {
-        this.app.close();
-    }
-
     private static WordCountApplication createApp() {
         final WordCountApplication app = new WordCountApplication();
         app.setInputTopics(List.of(INPUT_TOPIC));
         app.setOutputTopic(OUTPUT_TOPIC);
         return app;
+    }
+
+    @AfterEach
+    void tearDown() {
+        this.app.close();
     }
 
     @Test
