@@ -17,11 +17,11 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 @Setter
 @Slf4j
-public class DataProducer extends KafkaProducerApplication {
+public class SentenceProducer extends KafkaProducerApplication {
     static final String FILE_NAME = "kpops.txt";
 
     public static void main(final String[] args) {
-        startApplication(new DataProducer(), args);
+        startApplication(new SentenceProducer(), args);
     }
 
     @Override

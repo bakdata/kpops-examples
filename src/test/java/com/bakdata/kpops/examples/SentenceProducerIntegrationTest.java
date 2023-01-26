@@ -6,7 +6,6 @@ import static net.mguenther.kafka.junit.EmbeddedKafkaClusterConfig.defaultCluste
 import static net.mguenther.kafka.junit.Wait.delay;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.bakdata.kpops.examples.DataProducer;
 import com.bakdata.schemaregistrymock.junit5.SchemaRegistryMockExtension;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -20,13 +19,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-class DataProducerIntegrationTest {
+class SentenceProducerIntegrationTest {
     private static final int TIMEOUT_SECONDS = 10;
+    private static final String OUTPUT_TOPIC = "word-count-raw-data";
+
     @RegisterExtension
     final SchemaRegistryMockExtension schemaRegistryMockExtension = new SchemaRegistryMockExtension();
     private final EmbeddedKafkaCluster kafkaCluster = provisionWith(defaultClusterConfig());
 
-    private static final String OUTPUT_TOPIC = "word-count-raw-data";
 
     @BeforeEach
     void setup() {
@@ -42,8 +42,8 @@ class DataProducerIntegrationTest {
     void shouldRunApp() throws InterruptedException {
         this.kafkaCluster.createTopic(TopicConfig.withName(OUTPUT_TOPIC).useDefaults());
 
-        final DataProducer dataProducer = this.setupApp();
-        dataProducer.run();
+        final SentenceProducer sentenceProducer = this.setupApp();
+        sentenceProducer.run();
         delay(TIMEOUT_SECONDS, TimeUnit.SECONDS);
 
         assertThat(
@@ -63,8 +63,8 @@ class DataProducerIntegrationTest {
             });
     }
 
-    DataProducer setupApp() {
-        final DataProducer producerApp = new DataProducer();
+    SentenceProducer setupApp() {
+        final SentenceProducer producerApp = new SentenceProducer();
         producerApp.setBrokers(this.kafkaCluster.getBrokerList());
         producerApp.setSchemaRegistryUrl(this.schemaRegistryMockExtension.getUrl());
         producerApp.setOutputTopic(OUTPUT_TOPIC);
