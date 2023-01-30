@@ -42,6 +42,8 @@ sh setup_env.sh
 # 4- deploy the apps and the connector
 sh deploy-pipeline.sh
 
-# 5- enter redis dbs  and open the redis cli: redis-cli -h wc-redis-db-master
+# 5- enter redis db master node  and open the redis cli: 
+    # redis-cli -h wc-redis-db-master
     # keys *
+    # GET key
 ```
