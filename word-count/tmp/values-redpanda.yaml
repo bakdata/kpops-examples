@@ -1,0 +1,14 @@
+console:
+  config:
+    kafka:
+      brokers:
+        - k8kafka-cp-kafka-headless:9092
+      schemaRegistry:
+        enabled: true
+        urls:
+          - http://k8kafka-cp-schema-registry:8081
+    connect:
+      enabled: true
+      clusters:
+        - name: my-custer
+          url: http://k8kafka-cp-kafka-connect:8083

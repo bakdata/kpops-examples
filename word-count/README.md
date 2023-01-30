@@ -12,39 +12,9 @@ gradle jib -Djib.to.image=url-to-container-registry.com/kpops-word-count-data-pr
 gradle jib -Djib.to.image=url-to-container-registry.com/kpops-word-count-streams-app -Djib.container.mainClass=com.bakdata.kafka.WordCounter
 ```
 
-## Deploy in Kubernetes
-
-```shell
-helm repo add bakdata-common https://raw.githubusercontent.com/bakdata/streams-bootstrap/master/charts/
-helm repo update
-helm upgrade --debug --install --force --values values-dataproducer.yaml  wc-data-producer bakdata-common/producer-app
-helm upgrade --debug --install --force --values values-wordcounter.yaml  wc-word-counter bakdata-common/streams-app
-```
-
-## Install Redis DB
-
-```shell
-helm repo add redis-repo https://charts.bitnami.com/bitnami
-helm upgrade --debug --install --force  --values values-redis.yaml wc-redis-db redis-repo/redis
-```
-
-## Kafka Connect
-
 ## Publish Connect Image
 
-```shell
+```
 docker build . -t my-registry/my-wc-redis-connector
 docker push my-registry/my-wc-redis-connector
-```
-
-## Deploy
-
-```shell
-helm upgrade --debug --install --force --values values-kafka-connect.yaml wc-kafka-connect confluentinc/cp-helm-charts
-```
-
-## Add connector
-
-```shell
-sh ./configure-connector.sh
 ```

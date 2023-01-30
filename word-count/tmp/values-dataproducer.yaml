@@ -6,8 +6,8 @@ image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-data-producer
 imageTag: latest
 imagePullPolicy: Always
 streams:
-  brokers: "http://k8kafka-cp-kafka-headless.infrastructure.svc.cluster.local:9092"
-  schemaRegistryUrl: "http://k8kafka-cp-schema-registry.infrastructure.svc.cluster.local:8081"
+  brokers: "k8kafka-cp-kafka-headless:9092"
+  schemaRegistryUrl: "http://k8kafka-cp-schema-registry"
   outputTopic: word-count-raw-data-producer-topic
 prometheus:
   jmx:
