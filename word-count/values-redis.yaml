@@ -4,3 +4,6 @@ auth:
 master:
   count: 1
   configuration: "databases 1"
+image:
+  tag: 7.0.8
+  pullPolicy: IfNotPresent
