@@ -1,3 +1,6 @@
 architecture: standalone
 auth:
   enabled: false
+master:
+  count: 1
+  configuration: "databases 1"
