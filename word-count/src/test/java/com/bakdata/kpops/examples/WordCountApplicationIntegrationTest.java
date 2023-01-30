@@ -17,7 +17,7 @@ class WordCountApplicationIntegrationTest {
 
     @RegisterExtension
     final TestTopologyExtension<String, String> testTopology =
-        new TestTopologyExtension<>(this.app::createTopology, this.app.getKafkaProperties());
+            new TestTopologyExtension<>(this.app::createTopology, this.app.getKafkaProperties());
 
     private static WordCountApplication createApp() {
         final WordCountApplication app = new WordCountApplication();
@@ -41,21 +41,21 @@ class WordCountApplicationIntegrationTest {
         }
 
         this.testTopology.streamOutput(this.app.getOutputTopic())
-            .expectNextRecord()
-            .hasKey("kpops")
-            .hasValue("1")
-            .expectNextRecord()
-            .hasKey("test")
-            .hasValue("1")
-            .expectNextRecord()
-            .hasKey("kpops")
-            .hasValue("2")
-            .expectNextRecord()
-            .hasKey("test2")
-            .hasValue("1")
-            .expectNextRecord()
-            .hasKey("kpops")
-            .hasValue("3")
-            .expectNoMoreRecord();
+                .expectNextRecord()
+                .hasKey("kpops")
+                .hasValue("1")
+                .expectNextRecord()
+                .hasKey("test")
+                .hasValue("1")
+                .expectNextRecord()
+                .hasKey("kpops")
+                .hasValue("2")
+                .expectNextRecord()
+                .hasKey("test2")
+                .hasValue("1")
+                .expectNextRecord()
+                .hasKey("kpops")
+                .hasValue("3")
+                .expectNoMoreRecord();
     }
 }

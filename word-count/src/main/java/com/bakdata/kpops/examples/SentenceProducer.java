@@ -38,9 +38,9 @@ public class SentenceProducer extends KafkaProducerApplication {
             final URL url = Resources.getResource(FILE_NAME);
             final List<String> textLines = Resources.readLines(url, StandardCharsets.UTF_8);
 
-            for (int i = 0; i < textLines.size(); i++) {
-                log.info("Producing message:  {}---->to <<{}>>", textLines.get(i), this.getOutputTopic());
-                this.publish(producer, String.valueOf(i + 1), textLines.get(i));
+            for (final String textLine : textLines) {
+                log.info("Producing message:  {}---->to <<{}>>", textLine, this.getOutputTopic());
+                this.publish(producer, textLine);
                 log.info("Data produced.");
             }
             producer.flush();
@@ -49,9 +49,9 @@ public class SentenceProducer extends KafkaProducerApplication {
         }
     }
 
-    private void publish(final Producer<? super String, ? super String> producer, final String id, final String line) {
-        log.info("Producer.send(): {}: {}", id, line);
-        producer.send(new ProducerRecord<>(this.getOutputTopic(), id, line));
+    private void publish(final Producer<? super String, ? super String> producer, final String line) {
+        log.info("Producer.send(): {}", line);
+        producer.send(new ProducerRecord<>(this.getOutputTopic(), null, line));
         log.info("Sent!");
     }
 }

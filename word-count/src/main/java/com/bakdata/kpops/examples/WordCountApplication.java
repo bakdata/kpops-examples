@@ -23,10 +23,10 @@ public class WordCountApplication extends KafkaStreamsApplication {
         final KStream<String, String> textLines = builder.stream(this.getInputTopics());
 
         final KTable<String, String> wordCounts = textLines
-            .flatMapValues(value -> Arrays.asList(COMPILE.split(value.toLowerCase())))
-            .groupBy((key, value) -> value)
-            .count()
-            .mapValues(Object::toString);
+                .flatMapValues(value -> Arrays.asList(COMPILE.split(value.toLowerCase())))
+                .groupBy((key, value) -> value)
+                .count()
+                .mapValues(Object::toString);
 
         wordCounts.toStream().to(this.getOutputTopic());
     }

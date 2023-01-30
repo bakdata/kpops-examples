@@ -1,12 +1,13 @@
 {
-  "name": "kafka-connect-redis",
-  "config": {
-    "name": "kafka-connect-redis",
-    "connector.class": "com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector",
-    "connection.url": "http://wc-redis-db-headless:6379",
+  "name" : "RedisSinkConnector",
+  "config" : {
+    "name" : "RedisSinkConnector",
+    "connector.class" : "com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector",
+    "redis.hosts": "wc-redis-db-headless:6379",
+    "redis.database": 0,
     "topics": "word-count-countedwords-topic",
     "tasks.max": "1",
-    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-    "value.converter": "org.apache.kafka.connect.storage.StringConverter"
+    "key.converter" : "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter" : "org.apache.kafka.connect.storage.StringConverter"
   }
 }

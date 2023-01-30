@@ -1,4 +1,5 @@
 ### Java
+.gradle
 # Compiled class file
 *.class
 
@@ -20,7 +21,6 @@
 *.tar.gz
 *.rar
 build
-../build
 bin
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
@@ -28,6 +28,8 @@ hs_err_pid*
 
 # IDE
 .idea
+.idea
+
 .vscode
 
 # Generic
@@ -35,10 +37,3 @@ hs_err_pid*
 
 *.bin
 *.lock
-
-gess/
-deploy-demo-pipeline.sh
-
-setup.sh
-
-.gradle
