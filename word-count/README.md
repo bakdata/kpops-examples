@@ -13,7 +13,7 @@ gradle jib -Djib.to.image=us.gcr.io/gcp-bakdata-cluster/kpops-word-count-streams
 
 ## Publish Connect Image
 
-```
-docker build . -t my-registry/my-wc-redis-connector
-docker push my-registry/my-wc-redis-connector
+```shell
+docker build --platform linux/amd64 -t us.gcr.io/gcp-bakdata-cluster/redis-connector:7.1.3 .
+docker push us.gcr.io/gcp-bakdata-cluster/redis-connector
 ```

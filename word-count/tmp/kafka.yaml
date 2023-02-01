@@ -42,28 +42,13 @@ cp-kafka:
     enabled: false
 
 cp-schema-registry:
-  enabled: true
-  imageTag: 7.1.3
-  fullnameOverride: "k8kafka-cp-schema-registry"
-  overrideGroupId: k8kafka
-  kafka:
-    bootstrapServers: "PLAINTEXT://k8kafka-cp-kafka-headless:9092"
-  resources:
-    requests:
-      cpu: 50m
-      memory: 0.25G
-    limits:
-      cpu: 250m
-      memory: 0.25G
-  prometheus:
-    jmx:
-      enabled: false
+  enabled: false
 
 cp-kafka-connect:
   enabled: true
   replicaCount: 1
   image: us.gcr.io/gcp-bakdata-cluster/redis-connector
-  imageTag: "1.0.0"
+  imageTag: 7.1.3
   fullnameOverride: "k8kafka-cp-kafka-connect"
   overrideGroupId: k8kafka
   kafka:
