@@ -1,3 +1,4 @@
+
 cp-zookeeper:
   enabled: true
   servers: 1
@@ -18,7 +19,7 @@ cp-zookeeper:
 
 cp-kafka:
   enabled: true
-  brokers: 3
+  brokers: 1
   imageTag: 7.1.3
   podManagementPolicy: Parallel
   configurationOverrides:
@@ -26,6 +27,7 @@ cp-kafka:
     "offsets.topic.replication.factor": 1
     "transaction.state.log.replication.factor": 1
     "transaction.state.log.min.isr": 1
+    "confluent.metrics.reporter.topic.replicas": 1
   resources:
     requests:
       cpu: 50m

@@ -7,8 +7,8 @@ The producer reads a text and produces it into a topic, which is read by the str
 ## Build containers using jib
 
 ```shell
-gradle jib -Djib.to.image=url-to-container-registry.com/kpops-word-count-data-producer -Djib.container.mainClass=com.bakdata.kafka.DataProducer
-gradle jib -Djib.to.image=url-to-container-registry.com/kpops-word-count-streams-app -Djib.container.mainClass=com.bakdata.kafka.WordCounter
+gradle jib -Djib.to.image=us.gcr.io/gcp-bakdata-cluster/kpops-word-count-data-producer -Djib.container.mainClass=com.bakdata.kpops.examples.SentenceProducer
+gradle jib -Djib.to.image=us.gcr.io/gcp-bakdata-cluster/kpops-word-count-streams-app -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication
 ```
 
 ## Publish Connect Image

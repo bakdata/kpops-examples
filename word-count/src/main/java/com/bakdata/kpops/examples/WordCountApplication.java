@@ -21,7 +21,6 @@ public class WordCountApplication extends KafkaStreamsApplication {
     @Override
     public void buildTopology(final StreamsBuilder builder) {
         final KStream<String, String> textLines = builder.stream(this.getInputTopics());
-
         final KTable<String, String> wordCounts = textLines
                 .flatMapValues(value -> Arrays.asList(COMPILE.split(value.toLowerCase())))
                 .groupBy((key, value) -> value)

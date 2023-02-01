@@ -8,6 +8,7 @@ helm upgrade \
     --install \
     --version 0.6.1 \
     --values ./kafka.yaml \
+    --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster \
     --namespace kpops-word-count \
     k8kafka confluentinc/cp-helm-charts
     # --create-namespace \
@@ -16,6 +17,7 @@ helm upgrade \
 helm upgrade \
     --install \
     --values ./values-redpanda.yaml \
+    --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster \
     --namespace kpops-word-count \
     redpanda redpanda-console/console
     # --create-namespace \
