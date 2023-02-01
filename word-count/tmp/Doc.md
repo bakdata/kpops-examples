@@ -19,10 +19,14 @@ helm uninstall --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-c
 
 - use redpanda and create those topics:
 
-    - word-count-countedwords-topic
-    - word-count-raw-data-producer-topic
+  - word-count-countedwords-topic
+  - word-count-raw-data-producer-topic
 
 - port forward kafka connect to localhost:8083
+
+```shell
+kubectl port-forward deployment/k8kafka-cp-kafka-connect 8083:8083
+```
 
 ## Redis DB
 

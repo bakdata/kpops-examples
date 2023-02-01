@@ -4,9 +4,7 @@ console:
       brokers:
         - k8kafka-cp-kafka-headless:9092
       schemaRegistry:
-        enabled: true
-        urls:
-          - http://k8kafka-cp-schema-registry:8081
+        enabled: false
     connect:
       enabled: true
       clusters:
