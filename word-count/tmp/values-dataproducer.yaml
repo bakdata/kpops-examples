@@ -2,8 +2,8 @@ nameOverride: word-count-data-producer
 
 replicaCount: 1
 
-image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-data-producer
-imageTag: latest
+image: bakdata/kpops-demo-sentence-producer
+imageTag: 1.0.0
 imagePullPolicy: Always
 streams:
   brokers: "k8kafka-cp-kafka-headless:9092"

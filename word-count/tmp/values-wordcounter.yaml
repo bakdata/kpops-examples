@@ -2,8 +2,8 @@ nameOverride: word-count-wordcounter
 
 replicaCount: 1
 
-image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-streams-app
-imageTag: latest
+image: bakdata/kpops-demo-word-count-app
+imageTag: 1.0.0
 imagePullPolicy: Always
 
 streams:
