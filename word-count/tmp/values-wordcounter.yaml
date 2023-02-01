@@ -10,6 +10,7 @@ streams:
   brokers: "k8kafka-cp-kafka-headless:9092"
   inputTopics: word-count-raw-data-producer-topic
   outputTopic: word-count-countedwords-topic
+  productive: false
 
 annotations:
   consumerGroup: "word-counter-group"
