@@ -2,17 +2,16 @@
 
 ## Prerequisites
 
-### Deploy kafka environment and redpanda
+### Deploy redpanda
 
 ```shell
-sh setup_env.sh
-```
-
-### Destroy kafka environment and redpanda
-
-```shell
-helm uninstall --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster --namespace kpops-word-count redpanda
-helm uninstall --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster --namespace kpops-word-count k8kafka
+helm repo add redpanda-console 'https://dl.redpanda.com/public/console/helm/charts/'
+helm repo update
+helm upgrade \
+    --install \
+    --values ./values-redpanda.yaml \
+    --namespace kpops-word-count \
+    redpanda redpanda-console/console
 ```
 
 ### Create topics
@@ -26,22 +25,6 @@ helm uninstall --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-c
 
 ```shell
 kubectl port-forward deployment/k8kafka-cp-kafka-connect 8083:8083
-```
-
-## Redis DB
-
-### Install
-
-```shell
-helm repo add redis-repo https://charts.bitnami.com/bitnami
-helm repo update
-helm upgrade --debug --install  --values ../values-redis.yaml --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster --namespace kpops-word-count wc-redis-db redis-repo/redis
-```
-
-### Uninstall
-
-```shell
-helm uninstall --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster --namespace kpops-word-count wc-redis-db
 ```
 
 ## RedisSinkConnector
