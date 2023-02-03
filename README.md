@@ -23,7 +23,7 @@ We recommend the lightweight Kubernetes distribution [k3s](https://k3s.io/) for 
 1. You can install k3d with its installation script:
 
    ```shell
-   wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/v5.4.6/install.sh | bash
+   wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/v5.4.7/install.sh | bash
    ```
 
    For other ways of installing k3d, you can have a look at their
