@@ -36,13 +36,13 @@ helm repo update
 
 - Install Kafka, Zookeeper, Kafka Rest Proxy, and Kafka Connect.
   A single Helm chart installs all four components.
-  You can use the [kafka.yaml](https://github.com/bakdata/kpops-examples/blob/main/word-count/kafka.yaml) file to deploy the services:
+  You can use the [kafka.yaml](https://github.com/bakdata/kpops-examples/blob/main/word-count/kubernetes/kafka.yaml) file to deploy the services:
 
   ```shell
   helm upgrade \
       --install \
       --version 0.6.1 \
-      --values ./kafka.yaml \
+      --values kubernetes/kafka.yaml \
       --namespace kpops-word-count \
       --create-namespace \
       --wait \
@@ -72,12 +72,12 @@ Pay attention to the `STATUS` row. The pods should have a status of `Running`.
 
 ### Deploy Redis DB
 
-Please use the [values-redis.yaml](https://github.com/bakdata/kpops-examples/blob/main/word-count/values-redis.yaml) file to deploy a Redis database to the cluster.
+Please use the [values-redis.yaml](https://github.com/bakdata/kpops-examples/blob/main/word-count/kubernetes/values-redis.yaml) file to deploy a Redis database to the cluster.
 
 ```shell
 helm repo add redis-repo https://charts.bitnami.com/bitnami
 helm repo update
-helm upgrade --debug --install  --values values-redis.yaml  --namespace kpops-word-count wc-redis-db redis-repo/redis
+helm upgrade --debug --install  --values kubernetes/values-redis.yaml  --namespace kpops-word-count wc-redis-db redis-repo/redis
 ```
 
 ### Install KPOps
