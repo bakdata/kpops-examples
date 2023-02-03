@@ -27,7 +27,7 @@ We recommend the lightweight Kubernetes distribution [k3s](https://k3s.io/) for 
    ```
 
    For other ways of installing k3d, you can have a look at their
-   [installation guide](https://k3d.io/v5.4.6/#installation).
+   [installation guide](https://k3d.io/v5.4.7/#installation).
 
 2. The [Kafka deployment](#deploy-kafka) needs a modified Docker image.
    In that case, the image is built and pushed to a Docker registry that holds it.
