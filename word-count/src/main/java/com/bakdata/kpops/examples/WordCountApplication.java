@@ -41,7 +41,6 @@ public class WordCountApplication extends KafkaStreamsApplication {
         final Properties kafkaProperties = super.createKafkaProperties();
         kafkaProperties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, StringSerde.class);
         kafkaProperties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StringSerde.class);
-        kafkaProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         return kafkaProperties;
     }
 }
