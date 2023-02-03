@@ -25,6 +25,7 @@ public class WordCountApplication extends KafkaStreamsApplication {
                 .flatMapValues(value -> Arrays.asList(COMPILE.split(value.toLowerCase())))
                 .groupBy((key, value) -> value)
                 .count()
+//                 The redis sink connection lacks a Long converter and instead relies on a string converter.
                 .mapValues(Object::toString);
 
         wordCounts.toStream().to(this.getOutputTopic());

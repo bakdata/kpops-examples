@@ -39,9 +39,7 @@ public class SentenceProducer extends KafkaProducerApplication {
             final List<String> textLines = Resources.readLines(url, StandardCharsets.UTF_8);
 
             for (final String textLine : textLines) {
-                log.info("Producing message:  {}---->to <<{}>>", textLine, this.getOutputTopic());
                 this.publish(producer, textLine);
-                log.info("Data produced.");
             }
             producer.flush();
         } catch (final IOException e) {
@@ -50,8 +48,6 @@ public class SentenceProducer extends KafkaProducerApplication {
     }
 
     private void publish(final Producer<? super String, ? super String> producer, final String line) {
-        log.info("Producer.send(): {}", line);
         producer.send(new ProducerRecord<>(this.getOutputTopic(), null, line));
-        log.info("Sent!");
     }
 }
