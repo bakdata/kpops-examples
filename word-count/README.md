@@ -18,8 +18,8 @@ You can install a [Redis SinkConnector](https://docs.confluent.io/kafka-connecto
 for Kafka Connect by using the provided [Dockerfile](https://github.com/bakdata/kpops-examples/blob/main/word-count/Dockerfile) to build and push the modified image to your private Docker registry:
 
 ```shell
-docker build . --tag localhost:12345/redis-connector:7.1.3 && \
-docker push localhost:12345/redis-connector:7.1.3
+docker build . --tag localhost:12345/redis-connector:1.0.0 && \
+docker push localhost:12345/redis-connector:1.0.0
 ```
 
 Detailed instructions on building,
