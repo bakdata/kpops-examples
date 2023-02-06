@@ -1,0 +1,15 @@
+nameOverride: word-count-data-producer
+
+replicaCount: 1
+
+image: bakdata/kpops-demo-sentence-producer
+imageTag: 1.0.0
+imagePullPolicy: Always
+streams:
+  brokers: "k8kafka-cp-kafka-headless:9092"
+  outputTopic: word-count-raw-data-producer-topic
+prometheus:
+  jmx:
+    enabled: false
+
+debug: true
