@@ -16,7 +16,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 @Setter
-@Slf4j
 public class SentenceProducer extends KafkaProducerApplication {
     static final String FILE_NAME = "kpops.txt";
 

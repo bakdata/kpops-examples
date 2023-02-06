@@ -44,10 +44,10 @@ helm repo update
       --version 0.6.1 \
       --values kubernetes/kafka.yaml \
       --namespace kpops-word-count \
-      --create-namespace \
-      --wait \
       k8kafka confluentinc/cp-helm-charts
   ```
+      --create-namespace \
+      --wait \
 
 ### Check the status of your deployments
 
@@ -77,7 +77,7 @@ Please use the [values-redis.yaml](https://github.com/bakdata/kpops-examples/blo
 ```shell
 helm repo add redis-repo https://charts.bitnami.com/bitnami
 helm repo update
-helm upgrade --debug --install  --values kubernetes/values-redis.yaml  --namespace kpops-word-count wc-redis-db redis-repo/redis
+helm upgrade --debug --install  --values kubernetes/values-redis.yaml  --kube-context gke_gcp-bakdata-cluster_us-east1_gcp-bakdata-dev-cluster --namespace kpops-word-count wc-redis-db redis-repo/redis
 ```
 
 ### Install KPOps
