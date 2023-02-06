@@ -8,5 +8,5 @@ console:
     connect:
       enabled: true
       clusters:
-        - name: my-custer
+        - name: my-cluster
           url: http://k8kafka-cp-kafka-connect:8083
