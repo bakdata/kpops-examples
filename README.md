@@ -8,7 +8,7 @@ This repository offers various sample pipelines deployed using `KPOps`. Setting 
 
 ## Prerequisites
 
-- [k3d (Version 5.4.7+)](https://k3d.io/v5.4.7/) and [Docker (Version >= v20.10.5)](https://www.docker.com/get-started/)
+- [k3d (version 5.4.7+)](https://k3d.io/v5.4.7/) and [Docker (version >= v20.10.5)](https://www.docker.com/get-started/)
   or an existing Kubernetes cluster (>= 1.21.0)
 - [kubectl (compatible with server version 1.21.0)](https://kubernetes.io/docs/tasks/tools/)
 - [Helm (version 3.8.0+)](https://helm.sh)
