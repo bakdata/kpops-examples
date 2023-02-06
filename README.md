@@ -47,7 +47,7 @@ We recommend the lightweight Kubernetes distribution [k3s](https://k3s.io/) for 
    Creating a new k3d cluster automatically configures `kubectl` to connect
    to the local cluster by modifying your `~/.kube/config`.
    In case you manually set the `KUBECONFIG` variable or don't want k3d to modify your config,
-   k3d offers [many other options](https://k3d.io/v5.4.6/usage/kubeconfig/#handling-kubeconfigs).
+   k3d offers [many other options](https://k3d.io/v5.4.7/usage/kubeconfig/#handling-kubeconfigs).
 
 You can check the cluster status with `kubectl get pods -n kube-system`.
 If all returned elements have a `STATUS` of `Running` or `Completed`, then the cluster is up and running.
