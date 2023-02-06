@@ -2,7 +2,7 @@
 
 This repository offers various sample pipelines deployed using `KPOps`. Setting up `KPOps` actually involves:
 
-- optionally creating a local Kubernetes cluster
+- creating a local Kubernetes cluster (optional)
 - deploying Apache Kafka and Confluent's Schema Registry
 - installing KPOps
 
