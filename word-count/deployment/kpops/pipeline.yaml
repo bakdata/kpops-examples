@@ -1,14 +1,9 @@
 - type: producer
   name: wc-data-producer
-  namespace: ivan-yordanov-bakdata
-      
+  namespace: kpops
   app:
-    replicaCount: 1
     image: bakdata/kpops-demo-sentence-producer
     imageTag: 1.0.0
-    imagePullPolicy: Always
-    streams:
-      brokers: "k8kafka-cp-kafka-headless:9092"
     prometheus:
       jmx:
         enabled: false
@@ -16,23 +11,23 @@
 
 - type: streams-app
   name: wc-word-counter
-  namespace: ivan-yordanov-bakdata
+  namespace: kpops
   app:
     replicaCount: 1
     image: bakdata/kpops-demo-word-count-app
     imageTag: 1.0.0  
     commandLine:
       PRODUCTIVE: false
-    imagePullPolicy: Always
     streams:
       brokers: "k8kafka-cp-kafka-headless:9092"
     prometheus:
       jmx:
         enabled: false
     debug: true
+
 - type: kafka-sink-connector
   name: RedisSinkConnector
-  namespace: ivan-yordanov-bakdata
+  namespace: kpops
   app:
     name: RedisSinkConnector
     connector.class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
