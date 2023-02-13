@@ -1,29 +1,15 @@
 - type: producer
   name: wc-data-producer
-  namespace: kpops
   app:
     image: bakdata/kpops-demo-sentence-producer
     imageTag: 1.0.0
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: streams-app
   name: wc-word-counter
-  namespace: kpops
   app:
     replicaCount: 1
     image: bakdata/kpops-demo-word-count-app
     imageTag: 1.0.0  
-    commandLine:
-      PRODUCTIVE: false
-    streams:
-      brokers: "k8kafka-cp-kafka-headless:9092"
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: kafka-sink-connector
   name: RedisSinkConnector

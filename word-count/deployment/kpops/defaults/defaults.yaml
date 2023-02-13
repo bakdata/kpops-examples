@@ -1,3 +1,13 @@
+kafka-app:
+  namespace: kpops
+  app:
+    streams:
+      brokers: "k8kafka-cp-kafka-headless:9092"
+    prometheus:
+      jmx:
+        enabled: false
+  debug: true
+
 producer:
   to:
     topics:
@@ -9,6 +19,8 @@ streams-app:
   app:
     labels:
       pipeline: ${pipeline_name}
+    commandLine:
+        PRODUCTIVE: false
   to:
     topics:
       ${error_topic_name}:
@@ -17,8 +29,3 @@ streams-app:
       ${output_topic_name}:
         type: output
         partitions_count: 1
-
-kafka-app:
-  app:
-    streams:
-      brokers: "k8kafka-cp-kafka-headless:9092"
