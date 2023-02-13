@@ -6,6 +6,11 @@
 
 - type: streams-app
   name: wc-word-counter
+  to:
+    topics:
+        ${output_topic_name}:
+            configs:
+                cleanup.policy: compact
   app:
     replicaCount: 1
     image: bakdata/kpops-demo-word-count-app
@@ -15,7 +20,6 @@
   name: RedisSinkConnector
   namespace: kpops
   app:
-    name: RedisSinkConnector
     connector.class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
     redis.hosts: redis-headless:6379
     redis.database: 0
