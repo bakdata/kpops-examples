@@ -59,8 +59,8 @@ sh uninstall-pipeline.sh
 
 ```shell
 # enter redis db master node's shell   and open the redis cli:
-redis-cli -h wc-redis-db-master
+redis-cli -h redis-master
 config get databases # list all databases: should return 1 data base
 keys * # this should return all keys in the database.(every word found in the text)
-GET key # replace by a word you would like to find out the occurence in the text.
+GET <key> # replace by a word you would like to find out the occurence in the text.
 ```
