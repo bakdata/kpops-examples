@@ -1,3 +1,6 @@
+kubernetes-app:
+  prefix: ""
+
 kafka-app:
   namespace: kpops
   app:
@@ -20,7 +23,7 @@ streams-app:
     labels:
       pipeline: ${pipeline_name}
     commandLine:
-        PRODUCTIVE: false
+      PRODUCTIVE: false
   to:
     topics:
       ${error_topic_name}:
@@ -29,3 +32,6 @@ streams-app:
       ${output_topic_name}:
         type: output
         partitions_count: 1
+
+kafka-connect:
+  prefix: ""

@@ -8,13 +8,13 @@
   name: wc-word-counter
   to:
     topics:
-        ${output_topic_name}:
-            configs:
-                cleanup.policy: compact
+      ${output_topic_name}:
+        configs:
+          cleanup.policy: compact
   app:
     replicaCount: 1
     image: bakdata/kpops-demo-word-count-app
-    imageTag: 1.0.0  
+    imageTag: 1.0.0
 
 - type: kafka-sink-connector
   name: RedisSinkConnector
