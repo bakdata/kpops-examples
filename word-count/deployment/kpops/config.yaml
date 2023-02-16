@@ -1,8 +1,8 @@
 environment: development
 
 topic_name_config:
-  default_error_topic_name: "$${component_name}-dead-letter-topic"
-  default_output_topic_name: "$${component_name}-topic"
+  default_error_topic_name: "${component_name}-dead-letter-topic"
+  default_output_topic_name: "${component_name}-topic"
 
 broker: "http://k8kafka-cp-kafka-headless.kpops.svc.cluster.local:9092"
 
