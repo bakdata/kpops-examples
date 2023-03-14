@@ -33,5 +33,5 @@ streams-app:
         type: output
         partitions_count: 1
 
-kafka-connect:
+kafka-connector:
   prefix: ""
