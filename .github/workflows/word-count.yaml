@@ -1,6 +1,7 @@
-run-name: ${{ inputs.mode }} word-count
+run-name: deploy word-count
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       environment:
@@ -35,7 +36,7 @@ env:
   KPOPS_SCHEMA_REGISTRY_URL: http://localhost:8081
   KPOPS_REST_PROXY_HOST: http://localhost:8082
   KPOPS_CONNECT_HOST: http://localhost:8083
-  KPOPS_ENVIRONMENT: ${{ inputs.environment }}
+  KPOPS_ENVIRONMENT: development
   KPOPS_RETAIN_CLEAN_JOBS: false
   DEPLOY_K8S_NAMESPACE: kpops
 
@@ -53,17 +54,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: kpops ${{ inputs.mode }} --dry-run
+      - name: kpops deploy --dry-run
         uses: bakdata/kpops/actions/kpops-runner@2.0.0
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
-          command: ${{ inputs.mode }} --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
+          command: deploy --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
           token: ${{ secrets.GITHUB_TOKEN }}
 
   dry-run:
-    name: dry-run ${{ inputs.mode }}
+    name: dry-run deploy
     runs-on: ubuntu-latest
     if: ${{ inputs.mode == 'deploy' }}
     needs: generate
@@ -103,17 +104,17 @@ jobs:
           port: 8083
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      - name: kpops ${{ inputs.mode }} --dry-run
+      - name: kpops deploy --dry-run
         uses: bakdata/kpops/actions/kpops-runner@2.0.0
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
-          command: ${{ inputs.mode }} --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
+          command: deploy --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
           token: ${{ secrets.GITHUB_TOKEN }}
 
   execute:
-    name: execute ${{ inputs.mode }}
+    name: execute deploy
     runs-on: ubuntu-latest
     if: ${{ inputs.mode && inputs.execute && (success() || needs.dry-run.result == 'skipped' )}}
     needs: dry-run
@@ -123,7 +124,7 @@ jobs:
     steps:
       - name: Check main branch for production operations
         run: |
-          if [ ${{ inputs.environment }} == "production" ] && [ "$GITHUB_REF" != "refs/heads/main" ]; then
+          if [ "development" == "production" ] && [ "$GITHUB_REF" != "refs/heads/main" ]; then
             echo "Runs on production are only permitted from the main branch"
             exit 1
           fi
@@ -160,11 +161,11 @@ jobs:
           port: 8083
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      - name: kpops ${{ inputs.mode }} --execute
+      - name: kpops deploy --execute
         uses: bakdata/kpops/actions/kpops-runner@2.0.0
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
-          command: ${{ inputs.mode }} --execute ${{ (inputs.verbose && '--verbose') || '' }}
+          command: deploy --execute ${{ (inputs.verbose && '--verbose') || '' }}
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
           token: ${{ secrets.GITHUB_TOKEN }}
