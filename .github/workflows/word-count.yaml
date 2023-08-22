@@ -53,11 +53,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: kpops ${{ inputs.mode }} --dry-run
+      - name: kpops generate
         uses: bakdata/kpops/actions/kpops-runner@2.0.0
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
-          command: ${{ inputs.mode }} --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
+          command: generate
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
           token: ${{ secrets.GITHUB_TOKEN }}
