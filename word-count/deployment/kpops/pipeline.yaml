@@ -1,4 +1,4 @@
-- type: producer
+- type: producer-app
   name: wc-data-producer
   app:
     image: bakdata/kpops-demo-sentence-producer
@@ -9,6 +9,7 @@
   to:
     topics:
       ${output_topic_name}:
+        type: output
         configs:
           cleanup.policy: compact
   app:
@@ -18,7 +19,6 @@
 
 - type: kafka-sink-connector
   name: redis-sink-connector
-  namespace: kpops
   app:
     connector.class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
     redis.hosts: redis-headless:6379
