@@ -55,7 +55,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: kpops deploy --dry-run
-        uses: bakdata/kpops/actions/kpops-runner@2.0.0
+        uses: bakdata/kpops/actions/kpops-runner@fix/action-no-defaults
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
           command: deploy --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
@@ -105,7 +105,7 @@ jobs:
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
       - name: kpops deploy --dry-run
-        uses: bakdata/kpops/actions/kpops-runner@2.0.0
+        uses: bakdata/kpops/actions/kpops-runner@fix/action-no-defaults
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
           command: deploy --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
@@ -162,7 +162,7 @@ jobs:
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
       - name: kpops deploy --execute
-        uses: bakdata/kpops/actions/kpops-runner@2.0.0
+        uses: bakdata/kpops/actions/kpops-runner@fix/action-no-defaults
         with:
           kpops-version: ${{ env.KPOPS_VERSION }}
           command: deploy --execute ${{ (inputs.verbose && '--verbose') || '' }}
