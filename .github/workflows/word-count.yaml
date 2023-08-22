@@ -75,7 +75,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: GKE authentication
-        uses: bakdata/ci-templates/actions/setup-credentials@v1.21.0
+        uses: bakdata/ci-templates/actions/setup-credentials@fix/gke-setup
         with:
           gke-service-account: ${{ secrets.GKE_SERVICE_ACCOUNT }}
           gke-project: ${{ secrets.GKE_PROJECT }}
@@ -132,7 +132,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: GKE authentication
-        uses: bakdata/ci-templates/actions/setup-credentials@v1.21.0
+        uses: bakdata/ci-templates/actions/setup-credentials@fix/gke-setup
         with:
           gke-service-account: ${{ secrets.GKE_SERVICE_ACCOUNT }}
           gke-project: ${{ secrets.GKE_PROJECT }}
