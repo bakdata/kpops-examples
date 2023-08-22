@@ -31,9 +31,7 @@ on:
 
 env:
   KPOPS_VERSION: "2.0.0"
-  # INFRASTRUCTURE_NAMESPACE: # TODO
-  # KPOPS_KAFKA_BROKERS: # TODO
-  # SCHEMA_REGISTRY_URL: # TODO
+  KPOPS_KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
   KPOPS_SCHEMA_REGISTRY_URL: http://localhost:8081
   KPOPS_REST_PROXY_HOST: http://localhost:8082
   KPOPS_CONNECT_HOST: http://localhost:8083
@@ -84,26 +82,26 @@ jobs:
           gke-region: ${{ secrets.GKE_REGION }}
           gke-cluster: ${{ secrets.GKE_CLUSTER }}
 
-      # - name: Setup port forward Schema Registry
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: # TODO
-      #     port: 8081
-      #     namespace: ${{ env.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Schema Registry
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-schema-registry
+          port: 8081
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      # - name: Setup port forward Kafka REST
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: # TODO
-      #     port: 8082
-      #     namespace: ${{ env.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Kafka REST
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-rest
+          port: 8082
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      # - name: Setup port forward Kafka Connect
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: # TODO
-      #     port: 8083
-      #     namespace: ${{ env.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Kafka Connect
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-kafka-connect
+          port: 8083
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
       - name: kpops ${{ inputs.mode }} --dry-run
         uses: bakdata/kpops/actions/kpops-runner@2.0.0
@@ -141,26 +139,26 @@ jobs:
           gke-region: ${{ secrets.GKE_REGION }}
           gke-cluster: ${{ secrets.GKE_CLUSTER }}
 
-      # - name: Setup port forward Schema Registry
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: # TODO
-      #     port: 8081
-      #     namespace: ${{ env.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Schema Registry
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-schema-registry
+          port: 8081
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      # - name: Setup port forward Kafka REST
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: # TODO
-      #     port: 8082
-      #     namespace: ${{ env.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Kafka REST
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-rest
+          port: 8082
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      # - name: Setup port forward Kafka Connect
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: # TODO
-      #     port: 8083
-      #     namespace: ${{ env.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Kafka Connect
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-kafka-connect
+          port: 8083
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
       - name: kpops ${{ inputs.mode }} --execute
         uses: bakdata/kpops/actions/kpops-runner@2.0.0
