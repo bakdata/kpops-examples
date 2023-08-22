@@ -1,0 +1,171 @@
+run-name: deploy word-count
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment
+        type: choice
+        required: true
+        default: development
+        options:
+          - development
+          # - production # doesn't exist
+      mode:
+        description: KPOps operation
+        type: choice
+        required: true
+        options:
+          - deploy
+          - destroy
+          - reset
+          - clean
+      execute:
+        description: --execute
+        type: boolean
+        default: false
+      verbose:
+        description: --verbose
+        type: boolean
+        default: false
+
+env:
+  KPOPS_VERSION: "2.0.0"
+  KPOPS_KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
+  KPOPS_SCHEMA_REGISTRY_URL: http://localhost:8081
+  KPOPS_REST_PROXY_HOST: http://localhost:8082
+  KPOPS_CONNECT_HOST: http://localhost:8083
+  KPOPS_ENVIRONMENT: development
+  KPOPS_RETAIN_CLEAN_JOBS: false
+  DEPLOY_K8S_NAMESPACE: kpops
+
+  # Override this as comma separated list of step names to only apply action on specific steps
+  KPOPS_PIPELINE_STEPS: ""
+
+jobs:
+  generate:
+    name: generate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: kpops deploy --dry-run
+        uses: bakdata/kpops/actions/kpops-runner@2.0.0
+        with:
+          kpops-version: ${{ env.KPOPS_VERSION }}
+          command: deploy --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
+          pipeline: word-count/deployment/kpops/pipeline.yaml
+          config: word-count/deployment/kpops/config.yaml
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  dry-run:
+    name: dry-run deploy
+    runs-on: ubuntu-latest
+    if: ${{ inputs.mode == 'deploy' }}
+    needs: generate
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: GKE authentication
+        uses: bakdata/ci-templates/actions/setup-credentials@v1.21.0
+        with:
+          gke-service-account: ${{ secrets.GKE_SERVICE_ACCOUNT }}
+          gke-project: ${{ secrets.GKE_PROJECT }}
+          gke-region: ${{ secrets.GKE_REGION }}
+          gke-cluster: ${{ secrets.GKE_CLUSTER }}
+
+      - name: Setup port forward Schema Registry
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-schema-registry
+          port: 8081
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+
+      - name: Setup port forward Kafka REST
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-rest
+          port: 8082
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+
+      - name: Setup port forward Kafka Connect
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-kafka-connect
+          port: 8083
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+
+      - name: kpops deploy --dry-run
+        uses: bakdata/kpops/actions/kpops-runner@2.0.0
+        with:
+          kpops-version: ${{ env.KPOPS_VERSION }}
+          command: deploy --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
+          pipeline: word-count/deployment/kpops/pipeline.yaml
+          config: word-count/deployment/kpops/config.yaml
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  execute:
+    name: execute deploy
+    runs-on: ubuntu-latest
+    if: ${{ inputs.mode && inputs.execute && (success() || needs.dry-run.result == 'skipped' )}}
+    needs: dry-run
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check main branch for production operations
+        run: |
+          if [ "development" == "production" ] && [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "Runs on production are only permitted from the main branch"
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: GKE authentication
+        uses: bakdata/ci-templates/actions/setup-credentials@v1.21.0
+        with:
+          gke-service-account: ${{ secrets.GKE_SERVICE_ACCOUNT }}
+          gke-project: ${{ secrets.GKE_PROJECT }}
+          gke-region: ${{ secrets.GKE_REGION }}
+          gke-cluster: ${{ secrets.GKE_CLUSTER }}
+
+      - name: Setup port forward Schema Registry
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-schema-registry
+          port: 8081
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+
+      - name: Setup port forward Kafka REST
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-rest
+          port: 8082
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+
+      - name: Setup port forward Kafka Connect
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          service: k8kafka-cp-kafka-connect
+          port: 8083
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+
+      - name: kpops deploy --execute
+        uses: bakdata/kpops/actions/kpops-runner@2.0.0
+        with:
+          kpops-version: ${{ env.KPOPS_VERSION }}
+          command: deploy --execute ${{ (inputs.verbose && '--verbose') || '' }}
+          pipeline: word-count/deployment/kpops/pipeline.yaml
+          config: word-count/deployment/kpops/config.yaml
+          token: ${{ secrets.GITHUB_TOKEN }}
