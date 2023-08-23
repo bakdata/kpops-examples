@@ -85,7 +85,7 @@ jobs:
       - name: Setup port forward Schema Registry
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
-          kubectl-version: "v1.23.0"
+          kubectl-version: "v1.25.0"
           service: k8kafka-cp-schema-registry
           port: 8081
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
@@ -93,7 +93,7 @@ jobs:
       - name: Setup port forward Kafka REST
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
-          kubectl-version: "v1.23.0"
+          kubectl-version: "v1.25.0"
           service: k8kafka-cp-rest
           port: 8082
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
@@ -101,7 +101,7 @@ jobs:
       - name: Setup port forward Kafka Connect
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
-          kubectl-version: "v1.23.0"
+          kubectl-version: "v1.25.0"
           service: k8kafka-cp-kafka-connect
           port: 8083
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
@@ -145,6 +145,7 @@ jobs:
       - name: Setup port forward Schema Registry
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
+          kubectl-version: "v1.25.0"
           service: k8kafka-cp-schema-registry
           port: 8081
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
@@ -152,6 +153,7 @@ jobs:
       - name: Setup port forward Kafka REST
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
+          kubectl-version: "v1.25.0"
           service: k8kafka-cp-rest
           port: 8082
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
@@ -159,6 +161,7 @@ jobs:
       - name: Setup port forward Kafka Connect
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
+          kubectl-version: "v1.25.0"
           service: k8kafka-cp-kafka-connect
           port: 8083
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
