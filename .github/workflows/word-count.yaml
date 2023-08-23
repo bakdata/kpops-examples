@@ -43,30 +43,30 @@ env:
   KPOPS_PIPELINE_STEPS: ""
 
 jobs:
-  # generate:
-  #   name: generate
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
+  generate:
+    name: generate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-  #     - name: kpops generate
-  #       uses: bakdata/kpops/actions/kpops-runner@2.0.1
-  #       with:
-  #         kpops-version: ${{ env.KPOPS_VERSION }}
-  #         command: generate
-  #         pipeline: word-count/deployment/kpops/pipeline.yaml
-  #         config: word-count/deployment/kpops/config.yaml
-  #         token: ${{ secrets.GITHUB_TOKEN }}
+      - name: kpops generate
+        uses: bakdata/kpops/actions/kpops-runner@2.0.1
+        with:
+          kpops-version: ${{ env.KPOPS_VERSION }}
+          command: generate
+          pipeline: word-count/deployment/kpops/pipeline.yaml
+          config: word-count/deployment/kpops/config.yaml
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   dry-run:
     name: dry-run ${{ inputs.mode }}
     runs-on: ubuntu-latest
     if: ${{ inputs.mode == 'deploy' }}
-    # needs: generate
+    needs: generate
     defaults:
       run:
         shell: bash
