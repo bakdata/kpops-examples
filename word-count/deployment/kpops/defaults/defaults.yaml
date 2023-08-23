@@ -1,8 +1,10 @@
-kubernetes-app:
+pipeline-component:
   prefix: ""
 
-kafka-app:
+kubernetes-app:
   namespace: kpops
+
+kafka-app:
   app:
     streams:
       brokers: "k8kafka-cp-kafka-headless:9092"
@@ -11,7 +13,7 @@ kafka-app:
         enabled: false
   debug: true
 
-producer:
+producer-app:
   to:
     topics:
       ${output_topic_name}:
@@ -34,4 +36,4 @@ streams-app:
         partitions_count: 1
 
 kafka-connector:
-  prefix: ""
+  namespace: kpops
