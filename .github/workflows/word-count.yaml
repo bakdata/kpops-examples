@@ -60,6 +60,7 @@ jobs:
           command: generate
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
+          helm-version: "v3.10.1"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   dry-run:
@@ -113,6 +114,7 @@ jobs:
           command: ${{ inputs.mode }} --dry-run ${{ (inputs.verbose && '--verbose') || '' }}
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
+          helm-version: "v3.10.1"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   execute:
@@ -173,4 +175,5 @@ jobs:
           command: ${{ inputs.mode }} --execute ${{ (inputs.verbose && '--verbose') || '' }}
           pipeline: word-count/deployment/kpops/pipeline.yaml
           config: word-count/deployment/kpops/config.yaml
+          helm-version: "v3.10.1"
           token: ${{ secrets.GITHUB_TOKEN }}
