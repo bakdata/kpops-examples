@@ -103,7 +103,7 @@ jobs:
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
           kubectl-version: "v1.25.0"
-          service: strimzi-k8kafka-connect
+          service: strimzi-k8kafka-connect-api
           port: 8083
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
@@ -164,7 +164,7 @@ jobs:
         uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
           kubectl-version: "v1.25.0"
-          service: strimzi-k8kafka-connect
+          service: strimzi-k8kafka-connect-api
           port: 8083
           namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
