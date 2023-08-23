@@ -82,32 +82,29 @@ jobs:
           gke-region: ${{ secrets.GKE_REGION }}
           gke-cluster: ${{ secrets.GKE_CLUSTER }}
 
-      - name: Install kubectl
-        uses: azure/setup-kubectl@v3
+      - name: Setup port forward Schema Registry
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
         with:
-          version: "v1.23.0"
+          kubectl-version: "v1.23.0"
+          service: k8kafka-cp-schema-registry
+          port: 8081
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      - run: kubectl get pods -n ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
-      # - name: Setup port forward Schema Registry
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: k8kafka-cp-schema-registry
-      #     port: 8081
-      #     namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Kafka REST
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          kubectl-version: "v1.23.0"
+          service: k8kafka-cp-rest
+          port: 8082
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
-      # - name: Setup port forward Kafka REST
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: k8kafka-cp-rest
-      #     port: 8082
-      #     namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
-
-      # - name: Setup port forward Kafka Connect
-      #   uses: bakdata/ci-templates/actions/port-forward@v1.19.1
-      #   with:
-      #     service: k8kafka-cp-kafka-connect
-      #     port: 8083
-      #     namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
+      - name: Setup port forward Kafka Connect
+        uses: bakdata/ci-templates/actions/port-forward@v1.19.1
+        with:
+          kubectl-version: "v1.23.0"
+          service: k8kafka-cp-kafka-connect
+          port: 8083
+          namespace: ${{ secrets.INFRASTRUCTURE_NAMESPACE }}
 
       - name: kpops ${{ inputs.mode }} --dry-run
         uses: bakdata/kpops/actions/kpops-runner@2.0.1
