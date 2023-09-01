@@ -53,7 +53,7 @@ spec:
             - name: "APP_BROKERS"
               value: "my-cluster-kafka-0.my-cluster-kafka-brokers.infrastructure.svc:9092"
             - name: "APP_SCHEMA_REGISTRY_URL"
-              value: ""
+              value: "http://my-cluster-schema-registry.infrastructure.svc.cluster.local:8081"
             - name: "APP_DEBUG"
               value: "false"
             - name: "APP_INPUT_TOPICS"
