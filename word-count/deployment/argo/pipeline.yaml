@@ -32,6 +32,8 @@ spec:
             value: APP_
           - name: "APP_BROKERS"
             value: "k8kafka-cp-kafka-headless:9092"
+          - name: "APP_SCHEMA_REGISTRY_URL"
+            value: ""
           - name: "APP_DEBUG"
             value: "false"
           - name: "APP_OUTPUT_TOPIC"
@@ -104,6 +106,8 @@ spec:
               value: "true"
             - name: "APP_BROKERS"
               value: "k8kafka-cp-kafka-headless:9092"
+            - name: "APP_SCHEMA_REGISTRY_URL"
+              value: ""
             - name: "APP_DEBUG"
               value: "false"
             - name: "APP_INPUT_TOPICS"
