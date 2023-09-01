@@ -1,5 +1,5 @@
 ---
-# Source: streams-app/templates/deployment.yaml
+# Source: streams-app/templates/job.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -10,10 +10,7 @@ metadata:
     release: wc-word-counter
     pipeline: kpops
 spec:
-  selector:
-    matchLabels:
-      app: wc-word-counter
-      release: wc-word-counter
+  ttlSecondsAfterFinished: 30
   template:
     metadata:
       labels:
