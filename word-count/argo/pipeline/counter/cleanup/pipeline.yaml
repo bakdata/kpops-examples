@@ -10,7 +10,6 @@ metadata:
     release: wc-word-counter
     pipeline: kpops
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: wc-word-counter
