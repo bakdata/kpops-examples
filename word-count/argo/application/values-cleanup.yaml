@@ -6,3 +6,4 @@ applications:
       targetRevision: test/argocd
       path: word-count/argo/pipeline/counter/cleanup
       syncWave: 1
+      hook: true

@@ -10,7 +10,6 @@ metadata:
     release: wc-word-counter
     pipeline: kpops
 spec:
-  ttlSecondsAfterFinished: 30
   template:
     metadata:
       labels:

@@ -6,7 +6,7 @@ applications:
       targetRevision: test/argocd
       path: word-count/argo/pipeline/producer
       syncWave: 1
-      
+
     - name: wc-word-counter-clean-up
       repo: https://github.com/bakdata/kpops-examples.git
       targetRevision: test/argocd
