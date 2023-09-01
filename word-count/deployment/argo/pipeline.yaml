@@ -16,7 +16,6 @@ spec:
         release: wc-data-producer
     spec:
       restartPolicy: OnFailure
-      affinity:
       containers:
       - name: wc-data-producer
         image: "bakdata/kpops-demo-sentence-producer:1.0.0"
@@ -32,7 +31,7 @@ spec:
           - name: ENV_PREFIX
             value: APP_
           - name: "APP_BROKERS"
-            value: "k8kafka-cp-kafka-headless:9092"
+            value: "my-cluster-kafka-0.my-cluster-kafka-brokers.infrastructure.svc:9092"
           - name: "APP_SCHEMA_REGISTRY_URL"
             value: 
           - name: "APP_DEBUG"
@@ -107,7 +106,7 @@ spec:
             - name: "APP_VOLATILE_GROUP_INSTANCE_ID"
               value: "true"
             - name: "APP_BROKERS"
-              value: "k8kafka-cp-kafka-headless:9092"
+              value: "my-cluster-kafka-0.my-cluster-kafka-brokers.infrastructure.svc:9092"
             - name: "APP_SCHEMA_REGISTRY_URL"
               value: ""
             - name: "APP_DEBUG"
