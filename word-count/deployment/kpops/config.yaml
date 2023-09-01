@@ -13,3 +13,6 @@ kafka_rest_host: "http://localhost:8082"
 kafka_connect_host: "http://localhost:8083"
 
 defaults_path: "./defaults"
+
+helm_config: 
+  api_version: "v1.24.4"
