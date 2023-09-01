@@ -6,7 +6,7 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: {{ .syncWave | quote }}
-    {{- if $.Values.hook }}
+    {{- if .hook }}
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
     {{- end }}
