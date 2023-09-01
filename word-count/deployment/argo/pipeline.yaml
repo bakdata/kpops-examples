@@ -16,6 +16,7 @@ spec:
         release: wc-data-producer
     spec:
       restartPolicy: OnFailure
+      affinity:
       containers:
       - name: wc-data-producer
         image: "bakdata/kpops-demo-sentence-producer:1.0.0"
@@ -33,13 +34,14 @@ spec:
           - name: "APP_BROKERS"
             value: "k8kafka-cp-kafka-headless:9092"
           - name: "APP_SCHEMA_REGISTRY_URL"
-            value: ""
+            value: 
           - name: "APP_DEBUG"
             value: "false"
           - name: "APP_OUTPUT_TOPIC"
             value: "wc-data-producer-topic"
           - name: JAVA_TOOL_OPTIONS
-            value: '-XX:MaxRAMPercentage=75.0 '
+            value: '-XX:MaxRAMPercentage=75.0
+                    '
   backoffLimit: 6
 ---
 # output topic producer
