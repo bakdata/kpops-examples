@@ -57,7 +57,7 @@ spec:
               value: "wc-data-producer-topic"
             - name: "APP_CLEAN_UP"
               value: "wc-data-producer-topic"
-            - name: "APP_OUTPUT_TOPIC"
+            - name: "true"
               value: "wc-word-counter-topic"
             - name: "APP_ERROR_TOPIC"
               value: "wc-word-counter-dead-letter-topic"
