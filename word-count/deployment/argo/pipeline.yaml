@@ -16,6 +16,7 @@ spec:
         release: wc-data-producer
     spec:
       restartPolicy: OnFailure
+      affinity:
       containers:
       - name: wc-data-producer
         image: "bakdata/kpops-demo-sentence-producer:1.0.0"
