@@ -59,6 +59,8 @@ spec:
               value: "true"
             - name: "APP_OUTPUT_TOPIC"
               value: "wc-word-counter-topic"
+            - name: "APP_DELETE_OUTPUT"
+              value: "false"
             - name: "APP_ERROR_TOPIC"
               value: "wc-word-counter-dead-letter-topic"
             - name: "APP_PRODUCTIVE"
