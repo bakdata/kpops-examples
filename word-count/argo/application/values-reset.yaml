@@ -5,5 +5,5 @@ applications:
       repo: https://github.com/bakdata/kpops-examples.git
       targetRevision: test/argocd
       path: word-count/argo/pipeline/counter/reset
-      syncWave: 1
+      syncWave: -1
       hook: true

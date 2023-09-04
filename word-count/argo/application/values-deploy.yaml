@@ -4,5 +4,5 @@ applications:
     - name: wc-pipeline
       repo: https://github.com/bakdata/kpops-examples.git
       targetRevision: test/argocd
-      path: word-count/argo/pipeline/wc-pipeline/deploy
+      path: word-count/argo/wc-pipeline/deploy
       syncWave: -1
