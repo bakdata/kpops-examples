@@ -8,6 +8,8 @@ metadata:
     app: wc-data-producer
     chart: producer-app-2.9.0
     release: wc-data-producer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   template:
     metadata:
@@ -51,6 +53,8 @@ metadata:
   name: wc-data-producer-topic
   labels:
     strimzi.io/cluster: my-cluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   partitions: 1
   replicas: 1
