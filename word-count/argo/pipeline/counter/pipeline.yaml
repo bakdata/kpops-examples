@@ -6,7 +6,7 @@ metadata:
   name: wc-word-counter
   labels:
     app: wc-word-counter
-    chart: streams-app-2.9.0
+    chart: streams-app-0.1.0
     release: wc-word-counter
     pipeline: kpops
 spec:
@@ -68,7 +68,8 @@ spec:
               value: '-Dcom.sun.management.jmxremote.port=5555
                 -Dcom.sun.management.jmxremote.authenticate=false
                 -Dcom.sun.management.jmxremote.ssl=false
-                -XX:MaxRAMPercentage=75.0'
+                -XX:MaxRAMPercentage=75.0
+                '
 ---
 # Source: streams-app/templates/cleanup-job.yaml
 apiVersion: batch/v1
