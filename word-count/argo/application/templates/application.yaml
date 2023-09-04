@@ -22,8 +22,10 @@ spec:
     targetRevision: "{{- .targetRevision | default $.Values.defaultTargetRevision }}"
     path: {{ .path }}
   syncPolicy:
+    {{- if .automated}}
     automated:
-      {}
+      prune: true
+    {{- end }}
     syncOptions:
       - CreateNamespace=true
     retry:

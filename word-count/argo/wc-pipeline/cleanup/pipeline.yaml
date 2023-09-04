@@ -9,6 +9,9 @@ metadata:
     chart: streams-app-cleanup-job-2.9.0
     release: wc-word-counter
     pipeline: kpops
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     metadata:

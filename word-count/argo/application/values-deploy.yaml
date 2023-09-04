@@ -6,3 +6,4 @@ applications:
       targetRevision: test/argocd
       path: word-count/argo/wc-pipeline/deploy
       syncWave: -1
+      automated: false

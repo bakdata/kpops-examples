@@ -7,3 +7,4 @@ applications:
       path: word-count/argo/pipeline/counter/reset
       syncWave: -1
       hook: true
+      automated: false
