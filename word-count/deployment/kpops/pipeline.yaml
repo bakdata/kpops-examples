@@ -4,7 +4,7 @@
     image: bakdata/kpops-demo-sentence-producer
     imageTag: "1.0.0"
 
-- type: streams-app
+- type: local-streams-app
   name: wc-word-counter
   to:
     topics:
@@ -12,6 +12,7 @@
         type: output
         configs:
           cleanup.policy: compact
+  
   app:
     replicaCount: 1
     image: bakdata/kpops-demo-word-count-app

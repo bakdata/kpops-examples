@@ -8,6 +8,7 @@ kafka-app:
   app:
     streams:
       brokers: ${brokers}
+      schema_registry_url: ${schema_registry_url}
     prometheus:
       jmx:
         enabled: false

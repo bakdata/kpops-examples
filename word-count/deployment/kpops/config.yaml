@@ -6,7 +6,7 @@ topic_name_config:
 
 brokers: "my-cluster-kafka-0.my-cluster-kafka-brokers.infrastructure.svc:9092"
 
-schema_registry_url: "http://k8kafka-cp-schema-registry.kpops.svc.cluster.local:8081"
+schema_registry_url: "http://my-cluster-schema-registry.infrastructure.svc.cluster.local:8081"
 
 kafka_rest_host: "http://localhost:8082"
 
