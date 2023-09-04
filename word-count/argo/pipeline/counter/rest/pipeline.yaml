@@ -1,0 +1,93 @@
+---
+# Source: streams-app/templates/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wc-word-counter-clean-up
+  labels:
+    app: wc-word-counter
+    chart: streams-app-cleanup-job-2.9.0
+    release: wc-word-counter
+    pipeline: kpops
+spec:
+  template:
+    metadata:
+      labels:
+        app: wc-word-counter
+        release: wc-word-counter
+        pipeline: kpops
+    spec:
+      restartPolicy: OnFailure
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - wc-word-counter
+      containers:
+        - name: wc-word-counter
+          image: "bakdata/kpops-demo-word-count-app:1.0.0"
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2G
+            requests:
+              cpu: 200m
+              memory: 300Mi
+          env:
+            - name: ENV_PREFIX
+              value: APP_
+            - name: "APP_VOLATILE_GROUP_INSTANCE_ID"
+              value: "true"
+            - name: "APP_BROKERS"
+              value: "my-cluster-kafka-0.my-cluster-kafka-brokers.infrastructure.svc:9092"
+            - name: "APP_SCHEMA_REGISTRY_URL"
+              value: "http://my-cluster-schema-registry.infrastructure.svc.cluster.local:8081"
+            - name: "APP_DEBUG"
+              value: "false"
+            - name: "APP_INPUT_TOPICS"
+              value: "wc-data-producer-topic"
+            - name: "APP_CLEAN_UP"
+              value: "true"
+            - name: "APP_OUTPUT_TOPIC"
+              value: "wc-word-counter-topic"
+            - name: "APP_DELETE_OUTPUT"
+              value: "false"
+            - name: "APP_ERROR_TOPIC"
+              value: "wc-word-counter-dead-letter-topic"
+            - name: "APP_PRODUCTIVE"
+              value: "false"
+            - name: JAVA_TOOL_OPTIONS
+              value: '-Dcom.sun.management.jmxremote.port=5555
+                -Dcom.sun.management.jmxremote.authenticate=false
+                -Dcom.sun.management.jmxremote.ssl=false
+                -XX:MaxRAMPercentage=75.0'
+---
+# output topic streams app
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: wc-word-counter-topic
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 1
+---
+# error topic streams app
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: wc-word-counter-dead-letter-topic
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 1

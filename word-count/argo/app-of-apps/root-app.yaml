@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pipeline
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd 
+  source:
+    repoURL: https://github.com/bakdata/kpops-examples.git
+    targetRevision: test/argocd
+    path: word-count/argo/app-of-apps/apps
