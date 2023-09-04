@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wc-data-producer
+  name: wc-word-counter
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
