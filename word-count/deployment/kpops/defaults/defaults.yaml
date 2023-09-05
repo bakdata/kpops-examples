@@ -1,4 +1,5 @@
 pipeline-component:
+  prefix: word-count-
   namespace: kpops
 
 kafka-app:
