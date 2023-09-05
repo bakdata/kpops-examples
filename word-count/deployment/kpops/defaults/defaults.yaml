@@ -1,7 +1,5 @@
 pipeline-component:
   prefix: ""
-
-kubernetes-app:
   namespace: kpops
 
 kafka-app:
@@ -34,6 +32,3 @@ streams-app:
       ${output_topic_name}:
         type: output
         partitions_count: 1
-
-kafka-connector:
-  namespace: kpops
