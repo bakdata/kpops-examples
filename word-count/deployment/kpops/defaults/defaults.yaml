@@ -1,5 +1,4 @@
 pipeline-component:
-  prefix: ""
   namespace: kpops
 
 kafka-app:
