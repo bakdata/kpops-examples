@@ -1,11 +1,11 @@
 - type: producer-app
-  name: wc-data-producer
+  name: data-producer
   app:
     image: bakdata/kpops-demo-sentence-producer
     imageTag: "1.0.0"
 
 - type: streams-app
-  name: wc-word-counter
+  name: word-counter
   to:
     topics:
       ${output_topic_name}:
