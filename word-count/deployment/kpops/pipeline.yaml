@@ -1,7 +1,7 @@
 - type: producer-app
   name: data-producer
   app:
-    image: us.gcr.io/gcp-bakdata-cluster/kpops-demo-sentence-producer
+    image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-data-producer
     imageTag: no-sr-snapshot
 
 - type: streams-app
@@ -14,7 +14,7 @@
           cleanup.policy: compact
   app:
     replicaCount: 1
-    image: us.gcr.io/gcp-bakdata-cluster/kpops-demo-word-count-app
+    image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-streams-app
     imageTag: no-sr-snapshot
 
 - type: kafka-sink-connector
