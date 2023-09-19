@@ -23,7 +23,7 @@ jobs:
           java-distribution: "microsoft"
           java-version: "17"
           gradle-version: "wrapper"
-          working-directory: "./word-count"
+          working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
   test:
     name: Test
@@ -37,7 +37,7 @@ jobs:
           java-distribution: "microsoft"
           java-version: "17"
           gradle-version: "wrapper"
-          working-directory: "./word-count"
+          working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
   build-jib:
       name: Build tarball image
@@ -54,7 +54,6 @@ jobs:
             java-distribution: "microsoft"
             java-version: "17"
             gradle-version: "wrapper"
-            gradle-cache: true
 
         - name: Build Docker images
           run: |
@@ -68,18 +67,18 @@ jobs:
              --image=$WORD_COUNT_APPLICATION_IMAGE_NAME \
              -Djib.outputPaths.tar=build/$WORD_COUNT_APPLICATION_IMAGE_NAME.tar -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication
           shell: bash
-          working-directory: $WORKING_DIRECTORY_APP
+          working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
-        - name: Upload $SENTENCE_PRODUCER_IMAGE_NAME image artifact
+        - name: Upload ${{env.SENTENCE_PRODUCER_IMAGE_NAME}} image artifact
           uses: actions/upload-artifact@v3
           with:
-            name: $SENTENCE_PRODUCER_IMAGE_NAME
-            path: $WORKING_DIRECTORY_APP/build/$SENTENCE_PRODUCER_IMAGE_NAME.tar
+            name: ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}
+            path: ${{env.WORKING_DIRECTORY_APP}}/build/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}.tar
             retention-days: 1
 
-        - name: Upload $WORD_COUNT_APPLICATION_IMAGE_NAME image artifact
+        - name: Upload ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}} image artifact
           uses: actions/upload-artifact@v3
           with:
-            name: $WORD_COUNT_APPLICATION_IMAGE_NAME
-            path: $WORKING_DIRECTORY_APP/build/$WORD_COUNT_APPLICATION_IMAGE_NAME.tar
+            name: ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}
+            path: ${{env.WORKING_DIRECTORY_APP}}/build/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}.tar
             retention-days: 1
