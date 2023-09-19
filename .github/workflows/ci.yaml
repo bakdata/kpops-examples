@@ -40,7 +40,7 @@ jobs:
           working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
   build-jib:
-      name: Build tarball image
+      name: Build tarball images
       runs-on: ubuntu-22.04
       needs: test
 
@@ -110,8 +110,9 @@ jobs:
 
       - name: Publish Docker image
         run: |
-          if [[ $(ls -1 build/*.tar 2>/dev/null | wc -l) != 1 ]]; then
-            >&2 echo "Error: A single image tar file is needed in the downloaded artifact. You can upload one before using this action: https://github.com/actions/upload-artifact."
+          
+          if [[ $(ls -1 build/*.tar 2>/dev/null | wc -l) != 2 ]]; then
+            >&2 echo "Error: images tar files are needed in the downloaded artifact. You can upload them before using this action: https://github.com/actions/upload-artifact."
             exit 1
           fi
           docker load --input build/*.tar
