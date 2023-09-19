@@ -110,12 +110,12 @@ jobs:
 
       - name: Publish Docker image
         run: |
-          
           if [[ $(ls -1 build/*.tar 2>/dev/null | wc -l) != 2 ]]; then
             >&2 echo "Error: images tar files are needed in the downloaded artifact. You can upload them before using this action: https://github.com/actions/upload-artifact."
             exit 1
           fi
-          docker load --input build/*.tar
+          docker load --input build/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}.tar
+          docker load --input build/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}.tar
           if [[ "$GITHUB_REF" =~ ^refs/tags/.* ]]; then
             # SENTENCE_PRODUCER
             docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:latest
