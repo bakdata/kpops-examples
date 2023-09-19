@@ -1,0 +1,34 @@
+name: Build, Test and Publish
+
+on:
+  push:
+    tags: [ '**' ]
+    branches: [ '**' ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Build
+        uses: bakdata/ci-templates/actions/java-gradle-build@v1.7.0
+        with:
+          java-distribution: "microsoft"
+          java-version: "17"
+          gradle-version: "wrapper"
+          working-directory: "./word-count"
+
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - name: Test
+        uses: bakdata/ci-templates/actions/java-gradle-test@v1.7.0
+        with:
+          java-distribution: "microsoft"
+          java-version: "17"
+          gradle-version: "wrapper"
+          working-directory: "./word-count"
