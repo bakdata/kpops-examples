@@ -3,6 +3,7 @@ pipeline-component:
   namespace: kpops
 
 kafka-app:
+  version: "2.12.1"
   app:
     streams:
       brokers: ${brokers}
