@@ -5,6 +5,12 @@ on:
     tags: [ '**' ]
     branches: [ '**' ]
 
+env:
+  ACR_REGISTRY: bakdata
+  SENTENCE_PRODUCER_IMAGE_NAME: sentence-producer
+  WORD_COUNT_APPLICATION_IMAGE_NAME: word-count
+  WORKING_DIRECTORY_APP: "./word-count"
+
 jobs:
   build:
     name: Build
@@ -32,3 +38,48 @@ jobs:
           java-version: "17"
           gradle-version: "wrapper"
           working-directory: "./word-count"
+
+  build-jib:
+      name: Build tarball image
+      runs-on: ubuntu-22.04
+      needs: test
+
+      steps:
+        - name: Check out repository
+          uses: bakdata/ci-templates/actions/checkout@1.32.0
+
+        - name: Set up Gradle
+          uses: bakdata/ci-templates/actions/java-gradle-setup@v1.16.0
+          with:
+            java-distribution: "microsoft"
+            java-version: "17"
+            gradle-version: "wrapper"
+            gradle-cache: true
+
+        - name: Build Docker images
+          run: |
+            ./gradlew jibBuildTar \
+             --info --stacktrace \
+             --image=$SENTENCE_PRODUCER_IMAGE_NAME \
+             -Djib.outputPaths.tar=build/$SENTENCE_PRODUCER_IMAGE_NAME.tar -Djib.container.mainClass=com.bakdata.kpops.examples.SentenceProducer
+
+            ./gradlew jibBuildTar \
+             --info --stacktrace \
+             --image=$WORD_COUNT_APPLICATION_IMAGE_NAME \
+             -Djib.outputPaths.tar=build/$WORD_COUNT_APPLICATION_IMAGE_NAME.tar -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication
+          shell: bash
+          working-directory: "./word-count"
+
+        - name: Upload $SENTENCE_PRODUCER_IMAGE_NAME image artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: $SENTENCE_PRODUCER_IMAGE_NAME
+            path: $WORKING_DIRECTORY_APP/build/$SENTENCE_PRODUCER_IMAGE_NAME.tar
+            retention-days: 1
+
+        - name: Upload $WORD_COUNT_APPLICATION_IMAGE_NAME image artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: $WORD_COUNT_APPLICATION_IMAGE_NAME
+            path: $WORKING_DIRECTORY_APP/build/$WORD_COUNT_APPLICATION_IMAGE_NAME.tar
+            retention-days: 1
