@@ -59,12 +59,12 @@ jobs:
           run: |
             ./gradlew jibBuildTar \
              --info --stacktrace \
-             --image=$SENTENCE_PRODUCER_IMAGE_NAME \
+             --image=$SENTENCE_PRODUCER_IMAGE_NAME:${{ github.run_id }} \
              -Djib.outputPaths.tar=build/$SENTENCE_PRODUCER_IMAGE_NAME.tar -Djib.container.mainClass=com.bakdata.kpops.examples.SentenceProducer
 
             ./gradlew jibBuildTar \
              --info --stacktrace \
-             --image=$WORD_COUNT_APPLICATION_IMAGE_NAME \
+             --image=$WORD_COUNT_APPLICATION_IMAGE_NAME:${{ github.run_id }} \
              -Djib.outputPaths.tar=build/$WORD_COUNT_APPLICATION_IMAGE_NAME.tar -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication
           shell: bash
           working-directory: ${{env.WORKING_DIRECTORY_APP}}
