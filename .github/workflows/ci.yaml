@@ -140,3 +140,18 @@ jobs:
         shell: bash
         working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
+  release:
+    name: Create GitHub release
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-22.04
+    needs: publish-jib-image
+
+    steps:
+      - name: Release on Github
+        uses: bakdata/ci-templates/actions/java-gradle-release-github@v1.4.0
+        with:
+          github-username: ${{ secrets.USERNAME }}
+          github-token: ${{ secrets.GH_TOKEN }}
+          java-distribution: "microsoft"
+          java-version: "17"
+          working-directory:  ${{env.WORKING_DIRECTORY_APP}}
