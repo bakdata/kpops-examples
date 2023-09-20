@@ -40,7 +40,7 @@ jobs:
           working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
   build-and-publish-jib:
-      name: Build tarball images
+      name: Build and publish images
       runs-on: ubuntu-22.04
       needs: test
 
