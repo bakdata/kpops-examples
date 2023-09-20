@@ -69,76 +69,43 @@ jobs:
           shell: bash
           working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
-        - name: Upload ${{env.SENTENCE_PRODUCER_IMAGE_NAME}} image artifact
-          uses: actions/upload-artifact@v3
+        - name: Login to DockerHub
+          uses: docker/login-action@v2
           with:
-            name: ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}
-            path: ${{env.WORKING_DIRECTORY_APP}}/build/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}.tar
-            retention-days: 1
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-        - name: Upload ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}} image artifact
-          uses: actions/upload-artifact@v3
-          with:
-            name: ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}
-            path: ${{env.WORKING_DIRECTORY_APP}}/build/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}.tar
-            retention-days: 1
+        - name: Publish Docker image
+          run: |
+            if [[ $(ls -1 build/*.tar 2>/dev/null | wc -l) != 2 ]]; then
+              >&2 echo "Error: two images should be ready to import inside the build folder"
+              exit 1
+            fi
+            docker load --input build/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}.tar
+            docker load --input build/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}.tar
+            if [[ "$GITHUB_REF" =~ ^refs/tags/.* ]]; then
+              # SENTENCE_PRODUCER
+              docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:latest
+              docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
+              docker push ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:latest
+              docker push ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
 
+              # WORD_COUNT_APP
+              docker tag ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:latest
+              docker tag ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
+              docker push ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:latest
+              docker push ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
+            else
+              # SENTENCE_PRODUCER
+              docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }}
+              docker push ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }}
 
-  publish-jib-image:
-    name: Publish tarball images
-    runs-on: ubuntu-22.04
-    needs: build-jib
-
-    steps:
-      - name: Download Docker ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}} tar artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}
-          path: ${{env.WORKING_DIRECTORY_APP}}/build
-
-      - name: Download Docker ${{env.SENTENCE_PRODUCER_IMAGE_NAME}} tar artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}
-          path: ${{env.WORKING_DIRECTORY_APP}}/build
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Publish Docker image
-        run: |
-          if [[ $(ls -1 build/*.tar 2>/dev/null | wc -l) != 2 ]]; then
-            >&2 echo "Error: images tar files are needed in the downloaded artifact. You can upload them before using this action: https://github.com/actions/upload-artifact."
-            exit 1
-          fi
-          docker load --input build/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}.tar
-          docker load --input build/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}.tar
-          if [[ "$GITHUB_REF" =~ ^refs/tags/.* ]]; then
-            # SENTENCE_PRODUCER
-            docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:latest
-            docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
-            docker push ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:latest
-            docker push ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
-
-            # WORD_COUNT_APP
-            docker tag ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:latest
-            docker tag ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
-            docker push ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:latest
-            docker push ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${GITHUB_REF/refs\/tags\//}
-          else
-            # SENTENCE_PRODUCER
-            docker tag ${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }}
-            docker push ${{ env.DOCKER_REGISTRY }}/${{env.SENTENCE_PRODUCER_IMAGE_NAME}}:${{ github.run_id }}
-
-            # WORD_COUNT_APP
-            docker tag ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }}
-            docker push ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }}
-          fi
-        shell: bash
-        working-directory: ${{env.WORKING_DIRECTORY_APP}}
+              # WORD_COUNT_APP
+              docker tag ${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }} ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }}
+              docker push ${{ env.DOCKER_REGISTRY }}/${{env.WORD_COUNT_APPLICATION_IMAGE_NAME}}:${{ github.run_id }}
+            fi
+          shell: bash
+          working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
   release:
     name: Create GitHub release
