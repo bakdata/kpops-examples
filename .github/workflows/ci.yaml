@@ -88,6 +88,7 @@ jobs:
                 --image=$DOCKER_REGISTRY/$WORD_COUNT_APPLICATION_IMAGE_NAME \
                 -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication \
                 -Djib.to.tags=${{ github.run_id }}
+            fi
 
           shell: bash
           working-directory: ${{env.WORKING_DIRECTORY_APP}}
