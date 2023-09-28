@@ -1,0 +1,27 @@
+# apiVersion: com.bakdata.kafka/v1
+# kind: ProducerApp
+# metadata:
+#   name: sentecne-producer
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+# spec:
+#   brokers: http://strimzi-k8kafka-kafka-bootstrap.infrastructure.svc.cluster.local:9092
+#   image: bakdata/kpops-demo-sentence-producer
+#   imagePullPolicy: Always
+#   imageTag: 1.0.0
+#   name: sentecne-producer
+#   replicaCount: 1
+#   schemaRegistryUrl: http://k8kafka-cp-schema-registry.infrastructure.svc.cluster.local:8091
+# ---
+# # output topic producer
+# apiVersion: kafka.strimzi.io/v1beta2
+# kind: KafkaTopic
+# metadata:
+#   name: sentence-topic
+#   labels:
+#     strimzi.io/cluster: strimzi-k8kafka
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "1"
+# spec:
+#   partitions: 1
+#   replicas: 1

@@ -1,0 +1,41 @@
+apiVersion: com.bakdata.kafka/v1
+kind: StreamsApp
+metadata:
+  name: word-count-app
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  brokers: http://strimzi-k8kafka-kafka-bootstrap.infrastructure.svc.cluster.local:9092
+  image: bakdata/kpops-demo-word-count-app
+  imagePullPolicy: Always
+  imageTag: 1.0.0
+  name: word-counter
+  replicaCount: 1
+  schemaRegistryUrl: http://k8kafka-cp-schema-registry.infrastructure.svc.cluster.local:8091
+
+---
+# output topic streams app
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: wc-word-counter-topic
+  labels:
+    strimzi.io/cluster: strimzi-k8kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  partitions: 1
+  replicas: 1
+---
+# error topic streams app
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: wc-word-counter-dead-letter-topic
+  labels:
+    strimzi.io/cluster: strimzi-k8kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  partitions: 1
+  replicas: 1
