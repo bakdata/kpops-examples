@@ -61,37 +61,41 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+        - name: Build SentenceProducer image for tag  release
+          if: startsWith(github.ref, 'refs/tags/')
+          uses: jib-uploader@feature/ci
+          with:
+            image: $DOCKER_REGISTRY/$SENTENCE_PRODUCER_IMAGE_NAME
+            class: com.bakdata.kpops.examples.SentenceProducer
+            tags: latest,${GITHUB_REF/refs\/tags\//}
+            working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
-        - name: Build Docker images
-          run: |
-            if [[ "$GITHUB_REF" =~ ^refs/tags/.* ]]; then
-              ./gradlew jib \
-                --info --stacktrace \
-                --image=$DOCKER_REGISTRY/$SENTENCE_PRODUCER_IMAGE_NAME \
-                -Djib.container.mainClass=com.bakdata.kpops.examples.SentenceProducer \
-                -Djib.to.tags=latest,${GITHUB_REF/refs\/tags\//}
+        - name: Build WordCountApplication image for tag release
+          if: startsWith(github.ref, 'refs/tags/')
+          uses: jib-uploader@feature/ci
+          with:
+            image: $DOCKER_REGISTRY/$WORD_COUNT_APPLICATION_IMAGE_NAME
+            class: com.bakdata.kpops.examples.WordCountApplication
+            tags: latest,${GITHUB_REF/refs\/tags\//}
+            working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
-              ./gradlew jib \
-                --info --stacktrace \
-                --image=$DOCKER_REGISTRY/$WORD_COUNT_APPLICATION_IMAGE_NAME \
-                -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication \
-                -Djib.to.tags=latest,${GITHUB_REF/refs\/tags\//}
-            else
-              ./gradlew jib \
-                --info --stacktrace \
-                --image=$DOCKER_REGISTRY/$SENTENCE_PRODUCER_IMAGE_NAME \
-                 -Djib.container.mainClass=com.bakdata.kpops.examples.SentenceProducer \
-                 -Djib.to.tags=${{ github.run_id }}
+        - name: Build SentenceProducer image
+          if: startsWith(github.ref, 'refs/tags/')
+          uses: jib-uploader@feature/ci
+          with:
+            image: $DOCKER_REGISTRY/$SENTENCE_PRODUCER_IMAGE_NAME
+            class: com.bakdata.kpops.examples.SentenceProducer
+            tags: ${{ github.run_id }}
+            working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
-              ./gradlew jib \
-                --info --stacktrace \
-                --image=$DOCKER_REGISTRY/$WORD_COUNT_APPLICATION_IMAGE_NAME \
-                -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication \
-                -Djib.to.tags=${{ github.run_id }}
-            fi
-
-          shell: bash
-          working-directory: ${{env.WORKING_DIRECTORY_APP}}
+        - name: Build WordCountApplication image 
+          if: startsWith(github.ref, 'refs/tags/')
+          uses: jib-uploader@feature/ci
+          with:
+            image: $DOCKER_REGISTRY/$WORD_COUNT_APPLICATION_IMAGE_NAME
+            class: com.bakdata.kpops.examples.WordCountApplication
+            tags: ${{ github.run_id }}
+            working-directory: ${{env.WORKING_DIRECTORY_APP}}
 
   release:
     name: Create GitHub release
