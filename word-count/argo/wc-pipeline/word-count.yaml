@@ -1,7 +1,7 @@
 apiVersion: com.bakdata.kafka/v1
 kind: StreamsApp
 metadata:
-  name: word-count-app
+  name: wc-word-count-app
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -25,7 +25,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   partitions: 1
-  replicas: 1
+  replicas: 3
 ---
 # error topic streams app
 apiVersion: kafka.strimzi.io/v1beta2
@@ -38,4 +38,4 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   partitions: 1
-  replicas: 1
+  replicas: 3
