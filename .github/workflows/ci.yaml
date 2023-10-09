@@ -45,7 +45,7 @@ jobs:
   build-and-publish-jib:
       name: Build and publish images
       runs-on: ubuntu-22.04
-      needs: test
+      #needs: test
 
       steps:
         - name: Check out repository
