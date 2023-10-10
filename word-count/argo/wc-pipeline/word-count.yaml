@@ -12,7 +12,8 @@ spec:
   name: word-counter
   replicaCount: 1
   schemaRegistryUrl: http://k8kafka-cp-schema-registry.infrastructure.svc.cluster.local:8091
-  inputTopics: wc-sentence-topic
+  inputTopics:
+    - wc-sentence-topic
   outputTopic: wc-word-counter-topic
   errorTopic: wc-word-counter-dead-letter-topic
 
