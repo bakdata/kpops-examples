@@ -6,12 +6,11 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   brokers: http://strimzi-k8kafka-kafka-bootstrap.infrastructure.svc.cluster.local:9092
-  image: bakdata/kpops-demo-sentence-producer
+  image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-data-producer
   imagePullPolicy: Always
-  imageTag: 1.0.0
+  imageTag: no-sr-snapshot
   name: wc-sentecne-producer
   replicaCount: 1
-  schemaRegistryUrl: http://k8kafka-cp-schema-registry.infrastructure.svc.cluster.local:8091
 ---
 # output topic producer
 apiVersion: kafka.strimzi.io/v1beta2
