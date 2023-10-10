@@ -11,7 +11,6 @@ spec:
   imageTag: no-sr-snapshot
   name: word-counter
   replicaCount: 1
-  schemaRegistryUrl: http://k8kafka-cp-schema-registry.infrastructure.svc.cluster.local:8091
   inputTopics:
     - wc-sentence-topic
   outputTopic: wc-word-counter-topic
