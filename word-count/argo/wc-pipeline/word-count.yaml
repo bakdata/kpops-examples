@@ -8,7 +8,7 @@ spec:
   brokers: http://strimzi-k8kafka-kafka-bootstrap.infrastructure.svc.cluster.local:9092
   image: us.gcr.io/gcp-bakdata-cluster/kpops-word-count-streams-app
   imagePullPolicy: Always
-  imageTag: "1.0.0"
+  imageTag: no-sr-snapshot
   name: word-counter
   replicaCount: 1
   inputTopics:
