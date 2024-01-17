@@ -3,3 +3,8 @@
 !.gitignore
 bin
 build
+
+# KPOps generated schemas
+pipeline.json
+defaults.json
+config.json
