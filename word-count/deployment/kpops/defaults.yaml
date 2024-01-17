@@ -1,9 +1,13 @@
 pipeline-component:
   prefix: word-count-
+
+kubernetes-app:
   namespace: kpops
 
 kafka-app:
   app:
+    labels:
+      pipeline: ${pipeline_name}
     streams:
       brokers: ${brokers}
     prometheus:
@@ -20,8 +24,6 @@ producer-app:
 
 streams-app:
   app:
-    labels:
-      pipeline: ${pipeline_name}
     commandLine:
       PRODUCTIVE: false
   to:
