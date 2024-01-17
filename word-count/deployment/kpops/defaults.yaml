@@ -8,12 +8,12 @@ streams-bootstrap:
   app:
     imageTag: "1.0.0"
     labels:
-      pipeline: ${pipeline_name}
+      pipeline: ${pipeline.name}
 
 kafka-app:
   app:
     streams:
-      brokers: ${brokers}
+      brokers: ${config.kafka_brokers}
     prometheus:
       jmx:
         enabled: false
