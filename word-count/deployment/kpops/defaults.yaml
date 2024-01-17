@@ -4,10 +4,14 @@ pipeline-component:
 kubernetes-app:
   namespace: kpops
 
-kafka-app:
+streams-bootstrap:
   app:
+    imageTag: "1.0.0"
     labels:
       pipeline: ${pipeline_name}
+
+kafka-app:
+  app:
     streams:
       brokers: ${brokers}
     prometheus:
