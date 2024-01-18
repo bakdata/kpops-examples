@@ -4,10 +4,6 @@
     image: ${DOCKER_REGISTRY}/atm-demo-accountproducer
     schedule: 0 12 * * *
     suspend: true
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: producer-app
   name: transaction-avro-producer
@@ -18,10 +14,6 @@
       ITERATION: 20
     schedule: 0 12 * * *
     suspend: true
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: streams-app
   name: transaction-joiner
@@ -31,10 +23,6 @@
       PRODUCTIVE: false
     annotations:
       consumerGroup: atm-transactionjoiner-atm-fraud-joinedtransactions-topic
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: streams-app
   name: fraud-detector
@@ -44,10 +32,6 @@
       PRODUCTIVE: false
     annotations:
       consumerGroup: atm-frauddetector-atm-fraud-possiblefraudtransactions-topic
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: streams-app
   name: account-linker
@@ -63,10 +47,6 @@
       PRODUCTIVE: false
     annotations:
       consumerGroup: atm-accountlinker-atm-fraud-output-topic
-    prometheus:
-      jmx:
-        enabled: false
-    debug: true
 
 - type: kafka-sink-connector
   name: postgresql-connector
