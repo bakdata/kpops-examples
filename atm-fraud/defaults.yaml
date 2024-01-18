@@ -1,6 +1,11 @@
 kubernetes-app:
   namespace: ${NAMESPACE}
 
+streams-bootstrap:
+  app:
+    labels:
+      pipeline: ${pipeline.name}
+
 kafka-app:
   app:
     streams:
@@ -16,8 +21,6 @@ producer-app:
 
 streams-app:
   app:
-    labels:
-      pipeline: ${pipeline.name}
     streams:
       optimizeLeaveGroupBehavior: false
   to:
