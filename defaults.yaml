@@ -1,19 +1,19 @@
-pipeline-component:
-  prefix: word-count-
-
 kubernetes-app:
-  namespace: kpops
+  namespace: ${NAMESPACE}
 
 streams-bootstrap:
   app:
     imageTag: "1.0.0"
     labels:
       pipeline: ${pipeline.name}
+    replicaCount: 1
 
 kafka-app:
   app:
     streams:
       brokers: ${config.kafka_brokers}
+      schemaRegistryUrl: ${config.schema_registry.url}
+      optimizeLeaveGroupBehavior: false
     prometheus:
       jmx:
         enabled: false
@@ -23,8 +23,7 @@ producer-app:
   to:
     topics:
       ${output_topic_name}:
-        type: output
-        partitions_count: 1
+        partitions_count: 3
 
 streams-app:
   app:
@@ -36,5 +35,4 @@ streams-app:
         type: error
         partitions_count: 1
       ${output_topic_name}:
-        type: output
-        partitions_count: 1
+        partitions_count: 3
