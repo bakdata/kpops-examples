@@ -1,11 +1,19 @@
 pipeline-component:
   prefix: word-count-
+
+kubernetes-app:
   namespace: kpops
+
+streams-bootstrap:
+  app:
+    imageTag: "1.0.0"
+    labels:
+      pipeline: ${pipeline.name}
 
 kafka-app:
   app:
     streams:
-      brokers: ${brokers}
+      brokers: ${config.kafka_brokers}
     prometheus:
       jmx:
         enabled: false
@@ -20,8 +28,6 @@ producer-app:
 
 streams-app:
   app:
-    labels:
-      pipeline: ${pipeline_name}
     commandLine:
       PRODUCTIVE: false
   to:
