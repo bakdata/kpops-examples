@@ -19,8 +19,6 @@
   name: transaction-joiner
   app:
     image: ${DOCKER_REGISTRY}/atm-demo-transactionjoiner
-    commandLine:
-      PRODUCTIVE: false
     annotations:
       consumerGroup: atm-transactionjoiner-atm-fraud-joinedtransactions-topic
 
@@ -28,8 +26,6 @@
   name: fraud-detector
   app:
     image: ${DOCKER_REGISTRY}/atm-demo-frauddetector
-    commandLine:
-      PRODUCTIVE: false
     annotations:
       consumerGroup: atm-frauddetector-atm-fraud-possiblefraudtransactions-topic
 
@@ -43,8 +39,6 @@
         role: accounts
   app:
     image: ${DOCKER_REGISTRY}/atm-demo-accountlinker
-    commandLine:
-      PRODUCTIVE: false
     annotations:
       consumerGroup: atm-accountlinker-atm-fraud-output-topic
 
