@@ -13,5 +13,5 @@ schema_registry:
 defaults_path: "."
 
 topic_name_config:
-  default_error_topic_name: "${component.name}-dead-letter-topic"
-  default_output_topic_name: "${component.name}-topic"
+  default_error_topic_name: "${pipeline.name}-${component.name}-dead-letter-topic"
+  default_output_topic_name: "${pipeline.name}-${component.name}-topic"
