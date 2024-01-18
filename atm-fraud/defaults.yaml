@@ -3,6 +3,7 @@ kubernetes-app:
 
 streams-bootstrap:
   app:
+    imageTag: "1.0.0"
     labels:
       pipeline: ${pipeline.name}
 

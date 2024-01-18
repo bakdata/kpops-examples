@@ -3,7 +3,6 @@
   app:
     replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-accountproducer
-    imageTag: 1.0.0
     schedule: 0 12 * * *
     suspend: true
     prometheus:
@@ -16,7 +15,6 @@
   app:
     replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-transactionavroproducer
-    imageTag: 1.0.0
     commandLine:
       REAL_TX: 19
       ITERATION: 20
@@ -32,7 +30,6 @@
   app:
     replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-transactionjoiner
-    imageTag: 1.0.0
     commandLine:
       PRODUCTIVE: false
     annotations:
@@ -47,7 +44,6 @@
   app:
     replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-frauddetector
-    imageTag: 1.0.0
     commandLine:
       PRODUCTIVE: false
     annotations:
@@ -68,7 +64,6 @@
   app:
     replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-accountlinker
-    imageTag: 1.0.0
     commandLine:
       PRODUCTIVE: false
     annotations:
