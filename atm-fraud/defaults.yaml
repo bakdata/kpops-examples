@@ -20,8 +20,6 @@ kafka-app:
   debug: true
 
 producer-app:
-  app:
-    suspend: true
   to:
     topics:
       ${output_topic_name}:

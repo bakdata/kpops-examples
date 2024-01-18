@@ -3,6 +3,7 @@
   app:
     image: ${DOCKER_REGISTRY}/atm-demo-accountproducer
     schedule: 0 12 * * *
+    suspend: true
 
 - type: producer-app
   name: transaction-avro-producer
@@ -12,6 +13,7 @@
       REAL_TX: 19
       ITERATION: 20
     schedule: 0 12 * * *
+    suspend: true
 
 - type: streams-app
   name: transaction-joiner
