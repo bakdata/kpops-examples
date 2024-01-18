@@ -6,6 +6,7 @@ streams-bootstrap:
     imageTag: "1.0.0"
     labels:
       pipeline: ${pipeline.name}
+    replicaCount: 1
 
 kafka-app:
   app:

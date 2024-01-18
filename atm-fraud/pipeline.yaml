@@ -1,7 +1,6 @@
 - type: producer-app
   name: account-producer
   app:
-    replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-accountproducer
     schedule: 0 12 * * *
     suspend: true
@@ -13,7 +12,6 @@
 - type: producer-app
   name: transaction-avro-producer
   app:
-    replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-transactionavroproducer
     commandLine:
       REAL_TX: 19
@@ -28,7 +26,6 @@
 - type: streams-app
   name: transaction-joiner
   app:
-    replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-transactionjoiner
     commandLine:
       PRODUCTIVE: false
@@ -42,7 +39,6 @@
 - type: streams-app
   name: fraud-detector
   app:
-    replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-frauddetector
     commandLine:
       PRODUCTIVE: false
@@ -62,7 +58,6 @@
       account-producer:
         role: accounts
   app:
-    replicaCount: 1
     image: ${DOCKER_REGISTRY}/atm-demo-accountlinker
     commandLine:
       PRODUCTIVE: false
