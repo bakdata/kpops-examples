@@ -1,6 +1,3 @@
-pipeline-component:
-  prefix: ""
-
 kubernetes-app:
   namespace: ${NAMESPACE}
 

@@ -1,6 +1,3 @@
-pipeline-component:
-  prefix: word-count-
-
 kubernetes-app:
   namespace: kpops
 
