@@ -1,6 +1,6 @@
 - type: producer-app
   name: data-producer
-  app:
+  values:
     image: bakdata/kpops-demo-sentence-producer
 
 - type: streams-app
@@ -11,13 +11,13 @@
         type: output
         configs:
           cleanup.policy: compact
-  app:
+  values:
     image: bakdata/kpops-demo-word-count-app
     replicaCount: 1
 
 - type: kafka-sink-connector
   name: redis-sink-connector
-  app:
+  config:
     connector.class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
     redis.hosts: redis-headless:6379
     redis.database: 0
