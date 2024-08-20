@@ -1,4 +1,4 @@
-helm-app:
+kubernetes-app:
   namespace: ${NAMESPACE}
 
 streams-bootstrap-v2:
