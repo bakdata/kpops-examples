@@ -7,6 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import com.bakdata.kafka.KafkaProducerApplication;
+import com.bakdata.kafka.ProducerBuilder;
 import net.mguenther.kafka.junit.EmbeddedKafkaCluster;
 import net.mguenther.kafka.junit.KeyValue;
 import net.mguenther.kafka.junit.ReadKeyValues;
@@ -21,7 +24,7 @@ class SentenceProducerIntegrationTest {
     private static final int TIMEOUT_SECONDS = 10;
     private static final String OUTPUT_TOPIC = "word-count-raw-data";
     private final EmbeddedKafkaCluster kafkaCluster = provisionWith(defaultClusterConfig());
-    private SentenceProducer sentenceProducer;
+    private KafkaProducerApplication<SentenceProducer> sentenceProducer;
 
     @BeforeEach
     void setup() {
@@ -37,8 +40,8 @@ class SentenceProducerIntegrationTest {
     @Test
     void shouldRunApp() throws InterruptedException {
         this.kafkaCluster.createTopic(TopicConfig.withName(OUTPUT_TOPIC).useDefaults());
-
         this.sentenceProducer.run();
+
         delay(TIMEOUT_SECONDS, TimeUnit.SECONDS);
 
         assertThat(
@@ -59,11 +62,16 @@ class SentenceProducerIntegrationTest {
                 });
     }
 
-    private SentenceProducer setupApp() {
-        final SentenceProducer producerApp = new SentenceProducer();
-        producerApp.setBrokers(this.kafkaCluster.getBrokerList());
+    private KafkaProducerApplication<SentenceProducer> setupApp() {
+        final KafkaProducerApplication<SentenceProducer> producerApp = new KafkaProducerApplication<>() {
+            @Override
+            public SentenceProducer createApp() {
+                return new SentenceProducer();
+            }
+        };
+        producerApp.setBootstrapServers(this.kafkaCluster.getBrokerList());
         producerApp.setOutputTopic(OUTPUT_TOPIC);
-        producerApp.setStreamsConfig(Map.of(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "10000"));
+        producerApp.setKafkaConfig(Map.of(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "10000"));
         return producerApp;
     }
 }
