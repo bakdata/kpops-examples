@@ -1,4 +1,4 @@
-helm-app:
+kubernetes-app:
   namespace: ${NAMESPACE}
 
 streams-bootstrap:
@@ -8,14 +8,11 @@ streams-bootstrap:
       pipeline: ${pipeline.name}
     kafka:
       bootstrapServers: ${config.kafka_brokers}
-      schemaRegistryUrl: ${config.schema_registry.url}
       optimizeLeaveGroupBehavior: false
     prometheus:
       jmx:
         enabled: false
-
     replicaCount: 1
-  debug: true
 
 producer-app:
   to:
