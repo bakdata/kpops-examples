@@ -8,7 +8,6 @@ streams-bootstrap:
       pipeline: ${pipeline.name}
     kafka:
       bootstrapServers: ${config.kafka_brokers}
-      optimizeLeaveGroupBehavior: false
     prometheus:
       jmx:
         enabled: false
