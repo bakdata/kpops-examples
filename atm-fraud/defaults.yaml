@@ -15,7 +15,6 @@ streams-bootstrap-v2:
         enabled: false
 
     replicaCount: 1
-  debug: true
 
 producer-app-v2:
   to:

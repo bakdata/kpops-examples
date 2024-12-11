@@ -1,26 +1,31 @@
 package com.bakdata.kpops.examples;
 
-import com.bakdata.kafka.KafkaStreamsApplication;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.regex.Pattern;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
+import com.bakdata.kafka.KafkaApplication;
+import com.bakdata.kafka.SerdeConfig;
+import com.bakdata.kafka.SimpleKafkaStreamsApplication;
+import com.bakdata.kafka.StreamsApp;
+import com.bakdata.kafka.StreamsTopicConfig;
+import com.bakdata.kafka.TopologyBuilder;
 import org.apache.kafka.common.serialization.Serdes.StringSerde;
-import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 
-public class WordCountApplication extends KafkaStreamsApplication {
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
+public class WordCountApplication implements StreamsApp {
     private static final Pattern COMPILE = Pattern.compile("\\W+");
 
     public static void main(final String[] args) {
-        startApplication(new WordCountApplication(), args);
+        KafkaApplication.startApplication(
+                new SimpleKafkaStreamsApplication<>(WordCountApplication::new),
+                args
+        );
     }
 
     @Override
-    public void buildTopology(final StreamsBuilder builder) {
-        final KStream<String, String> textLines = builder.stream(this.getInputTopics());
+    public void buildTopology(final TopologyBuilder builder) {
+        final KStream<String, String> textLines = builder.streamInput();
         final KTable<String, String> wordCounts = textLines
                 .flatMapValues(value -> Arrays.asList(COMPILE.split(value.toLowerCase())))
                 .groupBy((key, value) -> value)
@@ -28,19 +33,17 @@ public class WordCountApplication extends KafkaStreamsApplication {
 //                 The redis sink connection lacks a Long converter and instead relies on a string converter.
                 .mapValues(Object::toString);
 
-        wordCounts.toStream().to(this.getOutputTopic());
+        wordCounts.toStream()
+                .to(builder.getTopics().getOutputTopic());
     }
 
     @Override
-    public String getUniqueAppId() {
-        return String.format("word-count-app-%s", this.getOutputTopic());
+    public String getUniqueAppId(final StreamsTopicConfig topics) {
+        return String.format("word-count-app-%s", topics.getOutputTopic());
     }
 
     @Override
-    protected Properties createKafkaProperties() {
-        final Properties kafkaProperties = super.createKafkaProperties();
-        kafkaProperties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, StringSerde.class);
-        kafkaProperties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StringSerde.class);
-        return kafkaProperties;
+    public SerdeConfig defaultSerializationConfig() {
+        return new SerdeConfig(StringSerde.class, StringSerde.class);
     }
 }

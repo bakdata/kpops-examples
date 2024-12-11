@@ -1,19 +1,21 @@
-- type: producer-app-v2
+- type: producer-app
   name: data-producer
   values:
     image: bakdata/kpops-demo-sentence-producer
+    imageTag: "2.0.0"
 
-- type: streams-app-v2
-  name: word-counter
+- type: streams-app
+  name: word-count-app
+  values:
+    image: bakdata/kpops-demo-word-count-app
+    imageTag: "2.0.0"
+    replicaCount: 1
   to:
     topics:
       ${output_topic_name}:
         type: output
         configs:
           cleanup.policy: compact
-  values:
-    image: bakdata/kpops-demo-word-count-app
-    replicaCount: 1
 
 - type: kafka-sink-connector
   name: redis-sink-connector
