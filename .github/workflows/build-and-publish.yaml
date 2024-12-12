@@ -47,6 +47,7 @@ jobs:
           gradle-cache: true
           gradle-cache-read-only: true
           gradle-refresh-dependencies: false
+          working-directory: ${{ env.working-directory }}
 
       - name: Build word count image
         uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.1
@@ -58,3 +59,4 @@ jobs:
           gradle-cache: true
           gradle-cache-read-only: true
           gradle-refresh-dependencies: false
+          working-directory: ${{ env.working-directory }}
