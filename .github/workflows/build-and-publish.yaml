@@ -13,7 +13,7 @@ env:
 jobs:
   build-and-test:
     name: Build, Test and Assess code quality
-    uses: bakdata/ci-templates/.github/workflows/java-gradle-base.yaml@1.50.1
+    uses: bakdata/ci-templates/.github/workflows/java-gradle-base.yaml@1.50.2
     with:
       java-version: 21
       gradle-version: 8.4
@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push sentence producer image
-        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.1
+        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.2
         with:
           full-image-name: bakdata/kpops-demo-sentence-producer
           class: com.bakdata.kpops.examples.SentenceProducer
@@ -56,7 +56,7 @@ jobs:
           working-directory: ${{ env.working-directory }}
 
       - name: Build and push word count image
-        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.1
+        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.2
         with:
           full-image-name: bakdata/kpops-demo-word-count-app
           class: com.bakdata.kpops.examples.WordCountApplication
