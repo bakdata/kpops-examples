@@ -3,7 +3,7 @@ description = "Word count pipeline with Kafka Streams"
 plugins {
     java
     idea
-    id("net.researchgate.release") version "3.0.2"
+    id("com.bakdata.release") version "1.4.1"
     id("com.bakdata.sonar") version "1.4.1"
     id("com.bakdata.sonatype") version "1.4.1"
     id("org.hildan.github.changelog") version "2.2.0"
@@ -33,14 +33,6 @@ configure<com.bakdata.gradle.SonatypeSettings> {
         }
     }
 }
-
-configure<org.hildan.github.changelog.plugin.GitHubChangelogExtension> {
-    githubUser = "bakdata"
-    githubRepository = "kpops-examples"
-    futureVersionTag = findProperty("changelog.releaseVersion")?.toString()
-    sinceTag = findProperty("changelog.sinceTag")?.toString()
-}
-
 
 tasks {
     compileJava {
