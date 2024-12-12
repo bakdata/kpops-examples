@@ -1,7 +1,11 @@
 description = "Word count pipeline with Kafka Streams"
+
 plugins {
     java
     idea
+    id("com.bakdata.release") version "1.4.1"
+    id("com.bakdata.sonar") version "1.4.1"
+    id("com.bakdata.sonatype") version "1.4.1"
     id("io.freefair.lombok") version "8.11"
     id("com.google.cloud.tools.jib") version "3.4.4"
 }
@@ -17,6 +21,15 @@ repositories {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configure<com.bakdata.gradle.SonatypeSettings> {
+    developers {
+        developer {
+            name.set("Ramin Gharib")
+            id.set("raminqaf")
+        }
     }
 }
 

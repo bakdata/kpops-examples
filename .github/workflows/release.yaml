@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: "The scope of the release (major, minor or patch)."
+        type: choice
+        required: true
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  java-gradle-release:
+    name: Java Gradle Release
+    uses: bakdata/ci-templates/.github/workflows/java-gradle-release.yaml@1.50.1
+    with:
+      java-version: 21
+      release-type: "${{ inputs.release-type }}"
+      working-directory: "./word-count/code"
+    secrets:
+      github-email: "${{ secrets.GH_EMAIL }}"
+      github-username: "${{ secrets.GH_USERNAME }}"
+      github-token: ${{ secrets.GH_TOKEN }}
