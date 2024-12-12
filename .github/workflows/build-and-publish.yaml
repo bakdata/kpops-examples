@@ -11,22 +11,22 @@ env:
   working-directory: "./word-count/code"
 
 jobs:
-#   build-and-test:
-#     name: Build, Test and Assess code quality
-#     uses: bakdata/ci-templates/.github/workflows/java-gradle-base.yaml@1.50.1
-#     with:
-#       java-version: 21
-#       gradle-version: 8.4
-#       gradle-cache: true
-#       gradle-cache-read-only: false
-#       gradle-refresh-dependencies: false
-#       working-directory: "./word-count/code"
-#     secrets:
-#       signing-key-id: ${{ secrets.SONATYPE_SIGNING_KEY_ID }}
-#       signing-password: ${{ secrets.SONATYPE_SIGNING_PASSWORD }}
-#       signing-secret-key-ring: ${{ secrets.SONATYPE_SIGNING_SECRET_KEY_RING }}
-#       sonar-token: ${{ secrets.SONARCLOUD_TOKEN }}
-#       sonar-organization: ${{ secrets.SONARCLOUD_ORGANIZATION }}
+  build-and-test:
+    name: Build, Test and Assess code quality
+    uses: bakdata/ci-templates/.github/workflows/java-gradle-base.yaml@1.50.1
+    with:
+      java-version: 21
+      gradle-version: 8.4
+      gradle-cache: true
+      gradle-cache-read-only: false
+      gradle-refresh-dependencies: false
+      working-directory: "./word-count/code"
+    secrets:
+      signing-key-id: ${{ secrets.SONATYPE_SIGNING_KEY_ID }}
+      signing-password: ${{ secrets.SONATYPE_SIGNING_PASSWORD }}
+      signing-secret-key-ring: ${{ secrets.SONATYPE_SIGNING_SECRET_KEY_RING }}
+      sonar-token: ${{ secrets.SONARCLOUD_TOKEN }}
+      sonar-organization: ${{ secrets.SONARCLOUD_ORGANIZATION }}
 
   build-jib:
     name: Build images
@@ -34,7 +34,7 @@ jobs:
     defaults:
       run:
         working-directory: ${{ env.working-directory }}
-    # needs: build-and-test
+    needs: build-and-test
 
     steps:
       - name: Login into docker
@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build sentence producer image
+      - name: Build and push sentence producer image
         uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.1
         with:
           full-image-name: bakdata/kpops-demo-sentence-producer
@@ -55,7 +55,7 @@ jobs:
           gradle-refresh-dependencies: false
           working-directory: ${{ env.working-directory }}
 
-      - name: Build word count image
+      - name: Build and push word count image
         uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.1
         with:
           full-image-name: bakdata/kpops-demo-word-count-app
