@@ -15,11 +15,13 @@ on:
 
 jobs:
   java-gradle-release:
-    name: Java Gradle
+    name: Java Gradle Release
     uses: bakdata/ci-templates/.github/workflows/java-gradle-release.yaml@1.50.1
     with:
       java-version: 21
       release-type: "${{ inputs.release-type }}"
+      working-directory: "./word-count/code"
     secrets:
       github-email: "${{ secrets.GH_EMAIL }}"
       github-username: "${{ secrets.GH_USERNAME }}"
+      github-token: ${{ secrets.GH_TOKEN }}
