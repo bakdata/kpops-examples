@@ -4,12 +4,29 @@ plugins {
     java
     idea
     id("net.researchgate.release") version "3.0.2"
-    id("com.bakdata.sonar") version "1.4.1"
-    id("com.bakdata.sonatype") version "1.4.1"
+//    id("com.bakdata.sonar") version "1.4.1"
+//    id("com.bakdata.sonatype") version "1.4.1"
     id("org.hildan.github.changelog") version "2.2.0"
     id("io.freefair.lombok") version "8.11"
     id("com.google.cloud.tools.jib") version "3.4.4"
 }
+
+buildscript {
+    repositories {
+        maven {
+            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
+        }
+    }
+    dependencies {
+        classpath("com.bakdata.gradle:sonar:1.4.2-SNAPSHOT")
+        classpath("com.bakdata.gradle:sonatype:1.4.2-SNAPSHOT")
+        classpath("com.bakdata.gradle:release:1.4.2-SNAPSHOT")
+    }
+}
+
+apply(plugin = "com.bakdata.sonar")
+apply(plugin = "com.bakdata.sonatype")
+apply(plugin = "com.bakdata.release")
 
 group = "com.bakdata.kpops.examples"
 
