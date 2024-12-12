@@ -12,7 +12,7 @@ jobs:
     with:
       java-version: 21
       docker-publisher: "bakdata"
-      working-directory: "./word-count"
+      working-directory: "./kpops-examples/word-count"
     secrets:
       docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
       docker-password: ${{ secrets.DOCKERHUB_TOKEN }}
