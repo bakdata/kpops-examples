@@ -37,6 +37,12 @@ jobs:
     # needs: build-and-test
 
     steps:
+      - name: Login into docker
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build sentence producer image
         uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.1
         with:
