@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parent-pipeline
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  - post-delete-finalizer.argocd.argoproj.io
+  - post-delete-finalizer.argocd.argoproj.io/cleanup
+spec:
+  project: default
+  destination:
+    name: ''
+    namespace: personal-ramin-gharib
+    server: https://kubernetes.default.svc
+  source:
+    path: word-count/argo/application
+    repoURL: https://github.com/bakdata/kpops-examples
+    targetRevision: test/argocd
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true

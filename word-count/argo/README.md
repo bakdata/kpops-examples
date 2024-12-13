@@ -2,6 +2,6 @@
 
 Create deployment manifests:
 ```
-kpops manifest ./word-count/pipeline.yaml
+kpops deploy ./word-count --operation-mode argo
 ```
 

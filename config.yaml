@@ -13,3 +13,9 @@ schema_registry:
 topic_name_config:
   default_error_topic_name: "${pipeline.name}-${component.name}-dead-letter-topic"
   default_output_topic_name: "${pipeline.name}-${component.name}-topic"
+
+operation_mode: argo
+
+strimzi_topic:
+  label:
+    bakdata.com/cluster: bakdata-strimzi-cluster
