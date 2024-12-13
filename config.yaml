@@ -1,4 +1,4 @@
-kafka_brokers: "http://k8kafka-cp-kafka-headless.kpops.svc.cluster.local:9092"
+kafka_brokers: "http://strimzi-k8kafka-kafka-bootstrap.infrastructure.svc.cluster.local:9092"
 
 kafka_rest:
   url: "http://localhost:8082"
