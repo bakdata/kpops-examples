@@ -1,7 +1,7 @@
 namespace: "personal-ramin-gharib"
 
 applications:
-    - name: word-count-pipeline
+    - name: wc-pipeline
       repo: https://github.com/bakdata/kpops-examples.git
       targetRevision: test/argocd
       path: word-count/argo/wc-pipeline
