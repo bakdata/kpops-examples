@@ -3,14 +3,13 @@ nameOverride: word-count-wordcounter
 replicaCount: 1
 
 image: bakdata/kpops-demo-word-count-app
-imageTag: 1.0.0  
+imageTag: 2.0.0
 imagePullPolicy: Always
 
-streams:
-  brokers: "k8kafka-cp-kafka-headless:9092"
+kafka:
+  bootstrapServers: "k8kafka-cp-kafka-headless:9092"
   inputTopics: word-count-raw-data-producer-topic
   outputTopic: word-count-countedwords-topic
-  productive: false
 
 annotations:
   consumerGroup: "word-counter-group"
@@ -18,5 +17,3 @@ annotations:
 prometheus:
   jmx:
     enabled: false
-
-debug: true

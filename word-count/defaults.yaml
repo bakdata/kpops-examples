@@ -1,0 +1,29 @@
+kubernetes-app:
+  namespace: ${NAMESPACE}
+
+streams-bootstrap:
+  version: "3.1.0"
+  values:
+    labels:
+      pipeline: ${pipeline.name}
+    kafka:
+      bootstrapServers: ${config.kafka_brokers}
+    prometheus:
+      jmx:
+        enabled: false
+    replicaCount: 1
+
+producer-app:
+  to:
+    topics:
+      ${output_topic_name}:
+        partitions_count: 3
+
+streams-app:
+  to:
+    topics:
+      ${error_topic_name}:
+        type: error
+        partitions_count: 1
+      ${output_topic_name}:
+        partitions_count: 3

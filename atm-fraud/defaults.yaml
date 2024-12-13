@@ -1,15 +1,11 @@
 kubernetes-app:
   namespace: ${NAMESPACE}
 
-streams-bootstrap:
-  app:
+streams-bootstrap-v2:
+  values:
     imageTag: "1.0.0"
     labels:
       pipeline: ${pipeline.name}
-    replicaCount: 1
-
-kafka-app:
-  app:
     streams:
       brokers: ${config.kafka_brokers}
       schemaRegistryUrl: ${config.schema_registry.url}
@@ -17,16 +13,17 @@ kafka-app:
     prometheus:
       jmx:
         enabled: false
-  debug: true
 
-producer-app:
+    replicaCount: 1
+
+producer-app-v2:
   to:
     topics:
       ${output_topic_name}:
         partitions_count: 3
 
-streams-app:
-  app:
+streams-app-v2:
+  values:
     commandLine:
       PRODUCTIVE: false
   to:

@@ -12,5 +12,5 @@ gradle jib -Djib.to.image=bakdata/kpops-demo-sentence-producer -Djib.container.m
 
 
 # deploy streams-app
-gradle jib -Djib.to.image=bakdata/kpops-demo-word-count-app-Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication
+gradle jib -Djib.to.image=bakdata/kpops-demo-word-count-app -Djib.container.mainClass=com.bakdata.kpops.examples.WordCountApplication
 ```

@@ -1,13 +1,13 @@
-- type: producer-app
+- type: producer-app-v2
   name: account-producer
-  app:
+  values:
     image: ${DOCKER_REGISTRY}/atm-demo-accountproducer
     schedule: 0 12 * * *
     suspend: true
 
-- type: producer-app
+- type: producer-app-v2
   name: transaction-avro-producer
-  app:
+  values:
     image: ${DOCKER_REGISTRY}/atm-demo-transactionavroproducer
     commandLine:
       REAL_TX: 19
@@ -15,36 +15,36 @@
     schedule: 0 12 * * *
     suspend: true
 
-- type: streams-app
+- type: streams-app-v2
   name: transaction-joiner
-  app:
+  values:
     image: ${DOCKER_REGISTRY}/atm-demo-transactionjoiner
     annotations:
       consumerGroup: atm-transactionjoiner-atm-fraud-joinedtransactions-topic
 
-- type: streams-app
+- type: streams-app-v2
   name: fraud-detector
-  app:
+  values:
     image: ${DOCKER_REGISTRY}/atm-demo-frauddetector
     annotations:
       consumerGroup: atm-frauddetector-atm-fraud-possiblefraudtransactions-topic
 
-- type: streams-app
+- type: streams-app-v2
   name: account-linker
   from:
     components:
       fraud-detector:
         type: input
       account-producer:
-        role: accounts
-  app:
+        label: accounts
+  values:
     image: ${DOCKER_REGISTRY}/atm-demo-accountlinker
     annotations:
       consumerGroup: atm-accountlinker-atm-fraud-output-topic
 
 - type: kafka-sink-connector
   name: postgresql-connector
-  app:
+  config:
     connector.class: io.confluent.connect.jdbc.JdbcSinkConnector
     tasks.max: 1
     connection.url: jdbc:postgresql://postgresql-dev.${NAMESPACE}.svc.cluster.local:5432/app_db
