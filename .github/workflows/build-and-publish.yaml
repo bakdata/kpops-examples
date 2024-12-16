@@ -8,6 +8,9 @@ on:
 env:
   java-version: 21
   gradle-version: 8.4
+  gradle-cache: true
+  gradle-cache-read-only: false
+  gradle-refresh-dependencies: false
   working-directory: "./word-count/code"
 
 jobs:
@@ -52,7 +55,7 @@ jobs:
           gradle-version: ${{ env.gradle-version }}
           gradle-cache: true
           gradle-cache-read-only: true
-          gradle-refresh-dependencies: false
+          gradle-refresh-dependencies: ${{ env.gradle-refresh-dependencies }}
           working-directory: ${{ env.working-directory }}
 
       - name: Build and push word count image
@@ -62,7 +65,25 @@ jobs:
           class: com.bakdata.kpops.examples.WordCountApplication
           java-version: ${{ env.java-version }}
           gradle-version: ${{ env.gradle-version }}
-          gradle-cache: true
+          gradle-cache: ${{ env.gradle-cache }}
           gradle-cache-read-only: true
-          gradle-refresh-dependencies: false
+          gradle-refresh-dependencies: ${{ env.gradle-refresh-dependencies }}
+          working-directory: ${{ env.working-directory }}
+
+  release:
+    name: Create Github release
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-22.04
+    needs: [build-and-test, build-jib]
+
+    steps:
+      - name: Release on Github
+        uses: bakdata/ci-templates/actions/java-gradle-release-github@1.50.4
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          java-version: ${{ env.java-version }}
+          gradle-version: ${{ env.gradle-version }}
+          gradle-cache: ${{ env.gradle-cache }}
+          gradle-cache-read-only: ${{ env.gradle-cache-read-only }}
+          gradle-refresh-dependencies: ${{ env.gradle-refresh-dependencies }}
           working-directory: ${{ env.working-directory }}
