@@ -8,7 +8,7 @@
   name: word-count-app
   values:
     image: bakdata/kpops-demo-word-count-app
-    imageTag: pipeline-12319316464-git-29a2f70
+    imageTag: 2.0.0
     replicaCount: 1
   to:
     topics:

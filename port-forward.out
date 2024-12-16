@@ -15,7 +15,20 @@ Handling connection for 8888
 Handling connection for 8888
 Handling connection for 8888
 Handling connection for 8888
+Handling connection for 8888
+Handling connection for 8888
+Handling connection for 8888
+error: lost connection to pod
+andling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
+Handling connection for 8080
+Handling connection for 8080
+Handling connection for 8080
+Handling connection for 8080
+Handling connection for 8080
+Handling connection for 8080
+E1216 10:25:20.782805   51395 portforward.go:381] error copying from remote stream to local connection: readfrom tcp6 [::1]:8080->[::1]:56571: write tcp6 [::1]:8080->[::1]:56571: write: broken pipe
+error: lost connection to pod
