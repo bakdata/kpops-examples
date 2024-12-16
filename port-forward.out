@@ -1,18 +1,16 @@
 Forwarding from 127.0.0.1:8080 -> 8080
 Forwarding from [::1]:8080 -> 8080
+Handling connection for 8888
+Handling connection for 8888
+Handling connection for 8888
+Handling connection for 8888
+Handling connection for 8888
+Handling connection for 8888
 Handling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
 Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
-Handling connection for 8080
+E1216 09:41:56.729194   36404 portforward.go:381] error copying from remote stream to local connection: readfrom tcp6 [::1]:8080->[::1]:56137: write tcp6 [::1]:8080->[::1]:56137: write: broken pipe
+E1216 09:42:00.494874   36404 portforward.go:381] error copying from remote stream to local connection: readfrom tcp6 [::1]:8080->[::1]:56129: write tcp6 [::1]:8080->[::1]:56129: write: broken pipe

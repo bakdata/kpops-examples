@@ -10,7 +10,7 @@ delete:
     kubectl delete -f parent-app.yaml -n argocd
 
 
-pf port="8888":
+pf:
     nohup kubectl port-forward --namespace infrastructure service/redpanda-console 8888:8080 > port-forward.out &
     nohup kubectl port-forward --namespace argocd service/argocd-server 8080:443 > port-forward.out &
 
