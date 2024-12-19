@@ -9,14 +9,14 @@ env:
   java-version: 21
   gradle-version: 8.4
   gradle-cache: true
-  gradle-cache-read-only: false
+  gradle-cache-read-only: true
   gradle-refresh-dependencies: false
   working-directory: "./word-count/code"
 
 jobs:
   build-and-test:
     name: Build, Test and Assess code quality
-    uses: bakdata/ci-templates/.github/workflows/java-gradle-base.yaml@1.50.3
+    uses: bakdata/ci-templates/.github/workflows/java-gradle-base.yaml@1.50.4
     with:
       java-version: 21
       gradle-version: 8.4
@@ -47,26 +47,26 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push sentence producer image
-        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.3
+        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.4
         with:
           full-image-name: bakdata/kpops-demo-sentence-producer
           class: com.bakdata.kpops.examples.SentenceProducer
           java-version: ${{ env.java-version }}
           gradle-version: ${{ env.gradle-version }}
           gradle-cache: true
-          gradle-cache-read-only: true
+          gradle-cache-read-only: ${{ env.gradle-cache-read-only }}
           gradle-refresh-dependencies: ${{ env.gradle-refresh-dependencies }}
           working-directory: ${{ env.working-directory }}
 
       - name: Build and push word count image
-        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.3
+        uses: bakdata/ci-templates/actions/java-gradle-build-jib@1.50.4
         with:
           full-image-name: bakdata/kpops-demo-word-count-app
           class: com.bakdata.kpops.examples.WordCountApplication
           java-version: ${{ env.java-version }}
           gradle-version: ${{ env.gradle-version }}
           gradle-cache: ${{ env.gradle-cache }}
-          gradle-cache-read-only: true
+          gradle-cache-read-only: ${{ env.gradle-cache-read-only }}
           gradle-refresh-dependencies: ${{ env.gradle-refresh-dependencies }}
           working-directory: ${{ env.working-directory }}
 
