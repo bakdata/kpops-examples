@@ -1,9 +1,0 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
-}
-
-
-rootProject.name = 'word-count'
-rootProject.buildFileName = "build.gradle.kts"
