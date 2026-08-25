@@ -2,13 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.0](https://github.com/bakdata/kpops-examples/tree/2.0.0) - 2024-12-19
+## [3.0.0](https://github.com/bakdata/kpops-examples/tree/3.0.0) - 2026-08-25
 ### What's changed
 
-* [Gradle Release Plugin] - new version commit:  '2.0.1-SNAPSHOT'.
+* chore(word-count): extract Java project to separate repo by @disrupted in [#34](https://github.com/bakdata/kpops-examples/pull/34)
+
+* ci: create bump-version-release workflow by @disrupted in [#35](https://github.com/bakdata/kpops-examples/pull/35)
+
+* refactor(atm-fraud): update streams-bootstrap to v3 by @disrupted in [#37](https://github.com/bakdata/kpops-examples/pull/37)
+
+* chore: bump image versions by @disrupted in [#39](https://github.com/bakdata/kpops-examples/pull/39)
 
 
-**Full Changelog**: https://github.com/bakdata/kpops-examples/compare/2.0.0...2.0.0
+**Full Changelog**: https://github.com/bakdata/kpops-examples/compare/2.0.0...3.0.0
 
 ## [2.0.0](https://github.com/bakdata/kpops-examples/tree/2.0.0) - 2024-12-19
 ### What's changed
@@ -17,17 +23,17 @@ All notable changes to this project will be documented in this file.
 
 * Create a word count pipeline by @MichaelKora
 
-* Clean up project by @raminqaf
+* Clean up project
 
-* Remove .gradle by @raminqaf
+* Remove .gradle
 
-* Update files by @raminqaf
+* Update files
 
-* Add test for streams app by @raminqaf
+* Add test for streams app
 
-* Update files by @raminqaf
+* Update files
 
-* Move to folder by @raminqaf
+* Move to folder
 
 * Deploy kafka connector by @MichaelKora
 
@@ -157,29 +163,28 @@ All notable changes to this project will be documented in this file.
 
 * Update examples for KPOps 7.0 by @disrupted in [#24](https://github.com/bakdata/kpops-examples/pull/24)
 
-* Rename role to label by @raminqaf in [#25](https://github.com/bakdata/kpops-examples/pull/25)
+* Rename role to label in [#25](https://github.com/bakdata/kpops-examples/pull/25)
 
-* Suffix producer and streams app with -v2 by @raminqaf in [#26](https://github.com/bakdata/kpops-examples/pull/26)
+* Suffix producer and streams app with -v2 in [#26](https://github.com/bakdata/kpops-examples/pull/26)
 
-* Prefix defaults.yaml components with -v2 by @raminqaf in [#27](https://github.com/bakdata/kpops-examples/pull/27)
+* Prefix defaults.yaml components with -v2 in [#27](https://github.com/bakdata/kpops-examples/pull/27)
 
-* Update word-count to streams bootstrap 3 by @raminqaf in [#28](https://github.com/bakdata/kpops-examples/pull/28)
+* Update word-count to streams bootstrap 3 in [#28](https://github.com/bakdata/kpops-examples/pull/28)
 
-* Add CI for build and publish docker Images by @raminqaf in [#29](https://github.com/bakdata/kpops-examples/pull/29)
+* Add CI for build and publish docker Images in [#29](https://github.com/bakdata/kpops-examples/pull/29)
 
-* Bump release workflow to fix wrong working directory by @raminqaf in [#30](https://github.com/bakdata/kpops-examples/pull/30)
+* Bump release workflow to fix wrong working directory in [#30](https://github.com/bakdata/kpops-examples/pull/30)
 
-* Bump release workflow to fix wrong working directory by @raminqaf in [#31](https://github.com/bakdata/kpops-examples/pull/31)
+* Bump release workflow to fix wrong working directory in [#31](https://github.com/bakdata/kpops-examples/pull/31)
 
-* Downgrade GitHub release workflow by @raminqaf in [#32](https://github.com/bakdata/kpops-examples/pull/32)
+* Downgrade GitHub release workflow in [#32](https://github.com/bakdata/kpops-examples/pull/32)
 
-* Fix GitHub release workflow by @raminqaf in [#33](https://github.com/bakdata/kpops-examples/pull/33)
-
-* [Gradle Release Plugin] - pre tag commit:  '2.0.0'.
+* Fix GitHub release workflow in [#33](https://github.com/bakdata/kpops-examples/pull/33)
 
 
 ### New Contributors
-* @raminqaf made their first contribution in [#33](https://github.com/bakdata/kpops-examples/pull/33)
+* @bakdata-bot made their first contribution
+* @ made their first contribution in [#33](https://github.com/bakdata/kpops-examples/pull/33)
 * @disrupted made their first contribution in [#24](https://github.com/bakdata/kpops-examples/pull/24)
 * @MichaelKora made their first contribution in [#18](https://github.com/bakdata/kpops-examples/pull/18)
 * @sujuka99 made their first contribution in [#10](https://github.com/bakdata/kpops-examples/pull/10)
