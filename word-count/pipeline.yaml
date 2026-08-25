@@ -2,13 +2,11 @@
   name: data-producer
   values:
     image: bakdata/kpops-demo-sentence-producer
-    imageTag: "2.0.0"
 
 - type: streams-app
   name: word-count-app
   values:
     image: bakdata/kpops-demo-word-count-app
-    imageTag: "2.0.0"
     replicaCount: 1
   to:
     topics:

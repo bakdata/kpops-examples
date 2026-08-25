@@ -4,7 +4,7 @@ kubernetes-app:
 streams-bootstrap:
   version: "3.1.0"
   values:
-    imageTag: "1.0.0"
+    imageTag: "1.1.0"
     labels:
       pipeline: ${pipeline.name}
     kafka:
