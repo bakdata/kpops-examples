@@ -1,11 +1,11 @@
-- type: producer-app-v2
+- type: producer-app
   name: account-producer
   values:
     image: ${DOCKER_REGISTRY}/atm-demo-accountproducer
     schedule: 0 12 * * *
     suspend: true
 
-- type: producer-app-v2
+- type: producer-app
   name: transaction-avro-producer
   values:
     image: ${DOCKER_REGISTRY}/atm-demo-transactionavroproducer
@@ -15,21 +15,21 @@
     schedule: 0 12 * * *
     suspend: true
 
-- type: streams-app-v2
+- type: streams-app
   name: transaction-joiner
   values:
     image: ${DOCKER_REGISTRY}/atm-demo-transactionjoiner
     annotations:
       consumerGroup: atm-transactionjoiner-atm-fraud-joinedtransactions-topic
 
-- type: streams-app-v2
+- type: streams-app
   name: fraud-detector
   values:
     image: ${DOCKER_REGISTRY}/atm-demo-frauddetector
     annotations:
       consumerGroup: atm-frauddetector-atm-fraud-possiblefraudtransactions-topic
 
-- type: streams-app-v2
+- type: streams-app
   name: account-linker
   from:
     components:
