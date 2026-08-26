@@ -10,9 +10,6 @@ streams-bootstrap:
     kafka:
       bootstrapServers: ${config.kafka_brokers}
       schemaRegistryUrl: ${config.schema_registry.url}
-    prometheus:
-      jmx:
-        enabled: false
     replicaCount: 1
 
 producer-app:

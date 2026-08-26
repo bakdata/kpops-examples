@@ -9,9 +9,6 @@ streams-bootstrap:
       pipeline: ${pipeline.name}
     kafka:
       bootstrapServers: ${config.kafka_brokers}
-    prometheus:
-      jmx:
-        enabled: false
     replicaCount: 1
 
 producer-app:
