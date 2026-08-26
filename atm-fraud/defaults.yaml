@@ -2,9 +2,9 @@ kubernetes-app:
   namespace: ${NAMESPACE}
 
 streams-bootstrap:
-  version: "3.1.0"
+  version: "7.5.0"
   values:
-    imageTag: "1.1.0"
+    imageTag: "2.0.0"
     labels:
       pipeline: ${pipeline.name}
     kafka:
